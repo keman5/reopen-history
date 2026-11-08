@@ -1,25 +1,30 @@
-import { cp, mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
+import { cp, mkdir, rm, writeFile, readFile, readdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 const version = JSON.parse(await readFile('package.json')).version;
+const output = join(homedir(), 'downloads', 'dist');
+await mkdir(output, { recursive: true });
 const common = {
   manifest_version: 3, name: 'Reopen History', version, default_locale: 'en',
   description: '__MSG_description__',
-  icons: { 16: 'icons/icon16.png', 32: 'icons/icon32.png', 48: 'icons/icon48.png', 128: 'icons/icon128.png' },
-  action: { default_title: '__MSG_actionTitle__', default_icon: { 16: 'icons/icon16.png', 32: 'icons/icon32.png' } },
-  options_ui: { page: 'history.html', open_in_tab: true },
+  icons: { 16: 'icons/icon16.png', 32: 'icons/icon32.png', 48: 'icons/icon48.png', 128: 'icons/icon128.png', 512: 'icons/icon512.png' },
+  action: { default_title: '__MSG_actionTitle__', default_icon: { 16: 'icons/toolbar16.png', 32: 'icons/toolbar32.png' } },
+  options_ui: { page: 'options.html', open_in_tab: true },
   commands: {
     'reopen-tab': { suggested_key: { default: 'Alt+Shift+T' }, description: '__MSG_reopen__' },
     'show-history': { suggested_key: { default: 'Ctrl+Shift+Y', mac: 'Command+Shift+Y' }, description: '__MSG_history__' }
   }
 };
 for (const target of ['chromium', 'firefox', 'safari']) {
-  const dir = `dist/${target}`;
+  const dir = join(output, `reopen-history-${target}-v${version}`);
+  await rm(dir, { recursive: true, force: true });
   await cp('extension', dir, { recursive: true });
   const manifest = { ...common, permissions: ['storage', 'contextMenus', 'tabs', ...(target === 'safari' ? [] : ['sessions'])] };
   manifest.background = target === 'chromium' ? { service_worker: 'background.js' } : { scripts: ['core.js', 'background.js'] };
   if (target === 'safari') {
-    manifest.options_ui = { page: 'history.html' };
+    manifest.options_ui = { page: 'options.html' };
   }
   if (target === 'chromium') manifest.minimum_chrome_version = '120';
   if (target === 'firefox') {
@@ -33,7 +38,9 @@ for (const target of ['chromium', 'firefox', 'safari']) {
     assert.deepEqual(Object.keys(messages).sort(), Object.keys(english).sort(), `Incomplete locale: ${locale}`);
     for (const value of Object.values(messages)) assert.ok(value.message?.trim());
   }
-  for (const path of ['history.html', 'history.js', 'core.js', 'background.js', 'icons/icon128.png']) assert.ok((await readFile(`${dir}/${path}`)).length);
-  execFileSync('/usr/bin/zip', ['-qr', `../reopen-history-${target}-${version}.zip`, '.'], { cwd: dir });
-  console.log(`Built ${target}: ${locales.length} locales`);
+  for (const path of ['options.html', 'options.js', 'history.html', 'history.js', 'core.js', 'background.js', 'icons/icon128.png']) assert.ok((await readFile(`${dir}/${path}`)).length);
+  const archive = join(output, `reopen-history-${target}-${version}.zip`);
+  await rm(archive, { force: true });
+  execFileSync('/usr/bin/zip', ['-qr', archive, '.'], { cwd: dir });
+  console.log(`Built ${target}: ${locales.length} locales → ${dir}`);
 }

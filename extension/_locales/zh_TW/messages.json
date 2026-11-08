@@ -12,7 +12,7 @@
     "message": "已關閉的分頁"
   },
   "intro": {
-    "message": "找回那些不小心關閉的頁面。"
+    "message": "需要的頁面，還在這裡。"
   },
   "pressHint": {
     "message": "按一下還原 · 長按顯示記錄 · Esc 收合清單"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "無法載入關閉記錄，請再試一次。"
+  },
+  "settings": {
+    "message": "擴充功能選項"
+  },
+  "showContextMenu": {
+    "message": "顯示右鍵選單"
+  },
+  "contextMenuHelp": {
+    "message": "在網頁右鍵選單加入還原與記錄入口。工具列右鍵隨時可查看記錄。"
+  },
+  "filterTitle": {
+    "message": "只還原有效網頁"
+  },
+  "filterHelp": {
+    "message": "僅還原 HTTP(S) 網頁，排除擴充功能頁、空白頁、新分頁與瀏覽器內部頁面。包含上述頁面的已關閉視窗將整筆略過，避免再次開啟。"
+  },
+  "saved": {
+    "message": "已儲存"
+  },
+  "settingsError": {
+    "message": "無法讀取或儲存設定，請重試。"
+  },
+  "justClosed": {
+    "message": "剛剛關閉"
+  },
+  "earlierClosed": {
+    "message": "較早關閉"
+  },
+  "reopenAction": {
+    "message": "重新開啟"
+  },
+  "localOnly": {
+    "message": "資料僅儲存在本機"
   }
 }

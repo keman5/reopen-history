@@ -40,7 +40,7 @@ async function restore(id) {
 async function updateBadge() {
   const recent = await entries();
   await api.action.setBadgeText({ text: recent.length ? String(recent.length) : '' });
-  await api.action.setBadgeBackgroundColor({ color: '#247362' });
+  await api.action.setBadgeBackgroundColor({ color: '#0071e3' });
 }
 
 async function openHistory() {
@@ -61,12 +61,17 @@ api.contextMenus.onClicked.addListener(info => {
   if (info.menuItemId === 'history') openHistory().catch(report);
   if (info.menuItemId === 'reopen') serial(() => restore()).catch(report);
 });
-api.runtime.onInstalled.addListener(() => {
-  api.contextMenus.removeAll(() => {
-    api.contextMenus.create({ id: 'reopen', title: t('reopen'), contexts: ['action', 'page'] });
-    api.contextMenus.create({ id: 'history', title: t('history'), contexts: ['action', 'page'] });
-  });
+async function updateMenus() {
+  await api.contextMenus.removeAll();
+  const { showContextMenu } = await api.storage.local.get('showContextMenu');
+  api.contextMenus.create({ id: 'history', title: t('history'), contexts: showContextMenu === true ? ['action', 'page'] : ['action'] });
+  if (showContextMenu === true) api.contextMenus.create({ id: 'reopen', title: t('reopen'), contexts: ['page'] });
+}
+api.runtime.onInstalled.addListener(() => { serial(updateMenus); });
+api.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && Object.hasOwn(changes, 'showContextMenu')) serial(updateMenus);
 });
+serial(updateMenus);
 api.runtime.onMessage.addListener((message, sender, respond) => {
   if (sender.id !== api.runtime.id) return false;
   if (!['list', 'restore'].includes(message?.type)) return false;

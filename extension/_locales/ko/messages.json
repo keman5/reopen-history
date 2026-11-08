@@ -12,7 +12,7 @@
     "message": "닫은 탭"
   },
   "intro": {
-    "message": "실수로 닫은 페이지를 다시 만나세요."
+    "message": "필요한 페이지는 여기에 있어요."
   },
   "pressHint": {
     "message": "클릭하여 복원 · 길게 눌러 기록 보기 · Esc로 목록 숨기기"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "닫은 탭을 불러오지 못했습니다. 다시 시도하세요."
+  },
+  "settings": {
+    "message": "설정"
+  },
+  "showContextMenu": {
+    "message": "우클릭 메뉴 표시"
+  },
+  "contextMenuHelp": {
+    "message": "웹페이지 우클릭 메뉴에 복원과 기록을 추가합니다. 도구 모음의 기록은 항상 사용할 수 있습니다."
+  },
+  "filterTitle": {
+    "message": "유효한 웹페이지만 복원"
+  },
+  "filterHelp": {
+    "message": "HTTP(S) 페이지만 복원합니다. 확장 프로그램, 빈 페이지, 새 탭 및 브라우저 내부 페이지는 제외합니다. 제외된 페이지가 포함된 닫은 창도 건너뜁니다."
+  },
+  "saved": {
+    "message": "저장됨"
+  },
+  "settingsError": {
+    "message": "설정을 읽거나 저장할 수 없습니다. 다시 시도하세요."
+  },
+  "justClosed": {
+    "message": "방금 닫은 탭"
+  },
+  "earlierClosed": {
+    "message": "이전에 닫은 탭"
+  },
+  "reopenAction": {
+    "message": "다시 열기"
+  },
+  "localOnly": {
+    "message": "기기에만 저장"
   }
 }

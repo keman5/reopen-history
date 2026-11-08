@@ -3,7 +3,7 @@
     "message": "Riapri le schede chiuse con un clic. Consulta e cerca le schede chiuse di recente."
   },
   "actionTitle": {
-    "message": "Riapri l’ultima scheda chiusa · Clic destro per la cronologia"
+    "message": "Riapri ultima scheda · Clic destro per la cronologia"
   },
   "reopen": {
     "message": "Riapri l’ultima scheda chiusa"
@@ -12,7 +12,7 @@
     "message": "Schede chiuse"
   },
   "intro": {
-    "message": "Una seconda possibilità per le pagine chiuse per errore."
+    "message": "Le pagine che cerchi sono ancora qui."
   },
   "pressHint": {
     "message": "Clic per riaprire · Tieni premuto per la cronologia · Esc nasconde l’elenco"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "Impossibile caricare le schede. Riprova."
+  },
+  "settings": {
+    "message": "Impostazioni"
+  },
+  "showContextMenu": {
+    "message": "Mostra menu contestuale"
+  },
+  "contextMenuHelp": {
+    "message": "Aggiungi ripristino e cronologia al menu delle pagine. La cronologia nella barra degli strumenti è sempre disponibile."
+  },
+  "filterTitle": {
+    "message": "Solo pagine web"
+  },
+  "filterHelp": {
+    "message": "Sono ammesse solo pagine HTTP(S). Sono escluse pagine di estensioni, vuote, nuove schede e pagine interne. Le finestre chiuse che le contengono vengono ignorate interamente."
+  },
+  "saved": {
+    "message": "Salvato"
+  },
+  "settingsError": {
+    "message": "Impossibile leggere o salvare le impostazioni. Riprova."
+  },
+  "justClosed": {
+    "message": "Appena chiusa"
+  },
+  "earlierClosed": {
+    "message": "Chiuse in precedenza"
+  },
+  "reopenAction": {
+    "message": "Riapri"
+  },
+  "localOnly": {
+    "message": "Solo sul dispositivo"
   }
 }

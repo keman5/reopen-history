@@ -3,7 +3,7 @@
     "message": "Rouvrez les onglets fermés en un clic. Consultez et recherchez les onglets récemment fermés."
   },
   "actionTitle": {
-    "message": "Rouvrir le dernier onglet fermé · Clic droit pour l’historique"
+    "message": "Rouvrir le dernier onglet · Clic droit pour l’historique"
   },
   "reopen": {
     "message": "Rouvrir le dernier onglet fermé"
@@ -12,7 +12,7 @@
     "message": "Onglets fermés"
   },
   "intro": {
-    "message": "Une seconde chance pour les pages fermées par erreur."
+    "message": "Vos pages sont encore ici."
   },
   "pressHint": {
     "message": "Cliquer pour rouvrir · Maintenir pour l’historique · Échap masque la liste"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "Impossible de charger les onglets. Réessayez."
+  },
+  "settings": {
+    "message": "Paramètres"
+  },
+  "showContextMenu": {
+    "message": "Afficher le menu contextuel"
+  },
+  "contextMenuHelp": {
+    "message": "Ajouter la restauration et l’historique au clic droit des pages. L’historique de la barre d’outils reste disponible."
+  },
+  "filterTitle": {
+    "message": "Uniquement les pages web"
+  },
+  "filterHelp": {
+    "message": "Seules les pages HTTP(S) sont éligibles. Les pages d’extension, vides, de nouvel onglet et internes sont exclues. Les fenêtres fermées contenant ces pages sont entièrement ignorées."
+  },
+  "saved": {
+    "message": "Enregistré"
+  },
+  "settingsError": {
+    "message": "Impossible de lire ou d’enregistrer les paramètres. Réessayez."
+  },
+  "justClosed": {
+    "message": "À l’instant"
+  },
+  "earlierClosed": {
+    "message": "Fermés plus tôt"
+  },
+  "reopenAction": {
+    "message": "Rouvrir"
+  },
+  "localOnly": {
+    "message": "Sur votre appareil"
   }
 }

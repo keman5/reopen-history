@@ -12,7 +12,7 @@
     "message": "已关闭的标签页"
   },
   "intro": {
-    "message": "找回那些不小心关闭的页面。"
+    "message": "需要的页面，还在这里。"
   },
   "pressHint": {
     "message": "单击恢复 · 长按显示历史 · Esc 收起列表"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "无法载入关闭记录，请重试。"
+  },
+  "settings": {
+    "message": "扩展选项"
+  },
+  "showContextMenu": {
+    "message": "显示右键菜单"
+  },
+  "contextMenuHelp": {
+    "message": "在网页右键菜单中添加恢复和历史入口。工具栏右键始终可查看历史。"
+  },
+  "filterTitle": {
+    "message": "只恢复有效网页"
+  },
+  "filterHelp": {
+    "message": "仅恢复 HTTP(S) 网页，排除扩展页、空白页、新标签页和浏览器内部页面。关闭的窗口包含上述页面时，整条跳过，避免批量恢复时把它们重新打开。"
+  },
+  "saved": {
+    "message": "已保存"
+  },
+  "settingsError": {
+    "message": "无法读取或保存设置，请重试。"
+  },
+  "justClosed": {
+    "message": "刚刚关闭"
+  },
+  "earlierClosed": {
+    "message": "更早关闭"
+  },
+  "reopenAction": {
+    "message": "重新打开"
+  },
+  "localOnly": {
+    "message": "数据仅在本机"
   }
 }

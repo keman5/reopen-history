@@ -12,7 +12,7 @@
     "message": "Closed tabs"
   },
   "intro": {
-    "message": "A second chance for the tabs you meant to keep."
+    "message": "A page worth coming back to."
   },
   "pressHint": {
     "message": "Click to reopen · Hold for history · Esc to hide the list"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "Could not load closed tabs. Try again."
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "showContextMenu": {
+    "message": "Show context menu"
+  },
+  "contextMenuHelp": {
+    "message": "Add recovery and history to webpage right-click menus. Toolbar history is always available."
+  },
+  "filterTitle": {
+    "message": "Only useful web pages"
+  },
+  "filterHelp": {
+    "message": "Only HTTP(S) pages are eligible. Extension pages, blank pages, new tabs and browser-internal pages are excluded. Closed windows containing excluded pages are skipped as a whole to avoid reopening them."
+  },
+  "saved": {
+    "message": "Saved"
+  },
+  "settingsError": {
+    "message": "Could not load or save settings. Try again."
+  },
+  "justClosed": {
+    "message": "Just closed"
+  },
+  "earlierClosed": {
+    "message": "Earlier closed"
+  },
+  "reopenAction": {
+    "message": "Reopen"
+  },
+  "localOnly": {
+    "message": "On your device"
   }
 }

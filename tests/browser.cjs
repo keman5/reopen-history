@@ -4,16 +4,18 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const http = require('node:http');
+const version = require('../package.json').version;
+const output = path.join(os.homedir(), 'downloads', 'dist');
 
 (async () => {
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'reopen-history-edge-'));
   const profile = path.join(scratch, 'profile');
   const target = process.argv[2] || 'chromium';
-  let extension = path.resolve('dist/chromium');
+  let extension = path.join(output, `reopen-history-chromium-v${version}`);
   if (target === 'safari') {
     // Exercise Safari's production fallback in headless Edge; only the background manifest differs.
     extension = path.join(scratch, 'extension');
-    fs.cpSync('dist/safari', extension, { recursive: true });
+    fs.cpSync(path.join(output, `reopen-history-safari-v${version}`), extension, { recursive: true });
     const manifestPath = path.join(extension, 'manifest.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath));
     manifest.background = { service_worker: 'background.js' };
@@ -58,6 +60,28 @@ const http = require('node:http');
     await history.getByRole('searchbox').fill('');
     console.log('PASS: history search and empty results');
 
+    const options = await context.newPage();
+    await options.goto(`chrome-extension://${id}/options.html`);
+    const menu = options.locator('#context-menu');
+    await menu.waitFor();
+    await menu.isEnabled();
+    assert.equal(await menu.isChecked(), false);
+    await menu.check();
+    await options.reload();
+    await options.waitForFunction(() => !document.querySelector('#context-menu').disabled);
+    assert.equal(await menu.isChecked(), true);
+    await menu.uncheck();
+    await options.reload();
+    await options.waitForFunction(() => !document.querySelector('#context-menu').disabled);
+    assert.equal(await menu.isChecked(), false);
+    await options.close();
+    const blank = await context.newPage();
+    await blank.close();
+    await history.evaluate(() => load());
+    assert.equal(await history.locator('.title').first().textContent(), 'Recovery test /second');
+    console.log('PASS: options default off, persist changes, and closed options/blank pages are filtered');
+
+
     await history.keyboard.press('Escape');
     assert.equal(await history.locator('#history').isVisible(), false);
     const initialCount = await history.locator('.entry').count();
@@ -87,6 +111,34 @@ const http = require('node:http');
     await worker.evaluate(() => serial(() => restore()));
     await (await toolbarPage).waitForURL(base + '/toolbar');
     console.log('PASS: toolbar handler restores a real closed tab (headless invocation)');
+
+    const openedHistory = context.waitForEvent('page');
+    await worker.evaluate(() => openHistory());
+    const historyTab = await openedHistory;
+    await historyTab.waitForURL(`chrome-extension://${id}/history.html`);
+    await historyTab.locator('#search').waitFor();
+    assert.equal(await worker.evaluate(async () => {
+      const tabs = await api.tabs.query({ url: api.runtime.getURL('history.html') });
+      const window = await api.windows.get(tabs.at(-1).windowId);
+      return window.type;
+    }), 'normal');
+    assert.equal(await worker.evaluate(() => api.action.getPopup({})), '');
+    assert.equal((await worker.evaluate(() => api.runtime.getContexts({ contextTypes: ['POPUP'] }))).length, 0);
+    assert.equal(await historyTab.evaluate(() => document.activeElement === document.body), true);
+    await historyTab.keyboard.press('Escape');
+    assert.equal(historyTab.isClosed(), false);
+    assert.equal(await historyTab.locator('#history').isVisible(), false);
+    console.log('PASS: history opens directly in a normal tab without popup or forced focus; Escape keeps the tab open');
+
+    const recoveryTab = await context.newPage();
+    await recoveryTab.goto(base + '/history-restore');
+    await recoveryTab.close();
+    await historyTab.getByRole('button', { name: 'Recovery test /history-restore' }).waitFor();
+    const historyRestore = context.waitForEvent('page');
+    await historyTab.locator('#reopen').click();
+    await (await historyRestore).waitForURL(base + '/history-restore');
+    assert.equal(historyTab.isClosed(), false);
+    console.log('PASS: history page restores the latest real tab and stays open');
 
     // UI strings and unsafe page titles must be treated as plain text.
     const rendered = await history.evaluate(() => {

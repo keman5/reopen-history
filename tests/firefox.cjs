@@ -3,6 +3,8 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const http = require('node:http');
+const version = require('../package.json').version;
+const output = path.join(os.homedir(), 'downloads', 'dist');
 const { spawn } = require('node:child_process');
 
 (async () => {
@@ -25,7 +27,7 @@ const { spawn } = require('node:child_process');
   let child, timer;
   let logs = '';
   try {
-    fs.cpSync('dist/firefox', extension, { recursive: true });
+    fs.cpSync(path.join(output, `reopen-history-firefox-v${version}`), extension, { recursive: true });
     const manifestPath = path.join(extension, 'manifest.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath));
     assert.equal(Object.hasOwn(manifest.background, 'persistent'), false, 'MV3 background must not declare persistent');

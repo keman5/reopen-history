@@ -3,7 +3,7 @@
     "message": "Geschlossene Tabs mit einem Klick öffnen. Kürzlich geschlossene Tabs durchsuchen."
   },
   "actionTitle": {
-    "message": "Letzten geschlossenen Tab öffnen · Rechtsklick für Verlauf"
+    "message": "Letzten Tab öffnen · Rechtsklick für Verlauf"
   },
   "reopen": {
     "message": "Letzten geschlossenen Tab öffnen"
@@ -12,7 +12,7 @@
     "message": "Geschlossene Tabs"
   },
   "intro": {
-    "message": "Eine zweite Chance für versehentlich geschlossene Seiten."
+    "message": "Die richtige Seite ist noch hier."
   },
   "pressHint": {
     "message": "Klicken zum Öffnen · Gedrückt halten für Verlauf · Esc blendet Liste aus"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "Tabs konnten nicht geladen werden. Bitte erneut versuchen."
+  },
+  "settings": {
+    "message": "Einstellungen"
+  },
+  "showContextMenu": {
+    "message": "Kontextmenü anzeigen"
+  },
+  "contextMenuHelp": {
+    "message": "Wiederherstellung und Verlauf im Webseiten-Kontextmenü anzeigen. Der Symbolleisten-Verlauf ist immer verfügbar."
+  },
+  "filterTitle": {
+    "message": "Nur Webseiten wiederherstellen"
+  },
+  "filterHelp": {
+    "message": "Nur HTTP(S)-Seiten. Erweiterungsseiten, leere Seiten, neue Tabs und interne Browserseiten sind ausgeschlossen. Geschlossene Fenster mit solchen Seiten werden vollständig übersprungen."
+  },
+  "saved": {
+    "message": "Gespeichert"
+  },
+  "settingsError": {
+    "message": "Einstellungen konnten nicht geladen oder gespeichert werden. Erneut versuchen."
+  },
+  "justClosed": {
+    "message": "Gerade geschlossen"
+  },
+  "earlierClosed": {
+    "message": "Früher geschlossen"
+  },
+  "reopenAction": {
+    "message": "Erneut öffnen"
+  },
+  "localOnly": {
+    "message": "Nur auf deinem Gerät"
   }
 }

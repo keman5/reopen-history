@@ -2,7 +2,11 @@
 (function (root) {
   function isRestorable(tab) {
     if (!tab || tab.incognito || !tab.url) return false;
-    try { return ['http:', 'https:'].includes(new URL(tab.url).protocol); }
+    try {
+      const url = new URL(tab.url);
+      if (!['http:', 'https:'].includes(url.protocol)) return false;
+      return !(url.hostname === 'ntp.msn.com' && /^\/(edge\/)?ntp\/?$/.test(url.pathname));
+    }
     catch { return false; }
   }
 
@@ -11,6 +15,9 @@
       const item = session.tab || session.window;
       if (!item?.sessionId) return [];
       const tabs = session.window?.tabs || [];
+      if (session.tab && !isRestorable(session.tab)) return [];
+      // Native window restoration is atomic; skip mixed windows rather than reopen excluded pages.
+      if (session.window && (!tabs.length || !tabs.every(isRestorable))) return [];
       return [{
         id: item.sessionId,
         title: session.tab?.title || session.tab?.url || tabs[0]?.title || tabs[0]?.url || '',

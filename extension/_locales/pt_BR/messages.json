@@ -3,7 +3,7 @@
     "message": "Reabra abas fechadas com um clique. Consulte e pesquise as abas fechadas recentemente."
   },
   "actionTitle": {
-    "message": "Reabrir a última aba fechada · Clique direito para o histórico"
+    "message": "Reabrir última aba · Clique direito para o histórico"
   },
   "reopen": {
     "message": "Reabrir a última aba fechada"
@@ -12,7 +12,7 @@
     "message": "Abas fechadas"
   },
   "intro": {
-    "message": "Uma segunda chance para as páginas fechadas por engano."
+    "message": "A página que você precisa ainda está aqui."
   },
   "pressHint": {
     "message": "Clique para reabrir · Segure para ver o histórico · Esc oculta a lista"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "Não foi possível carregar as abas. Tente novamente."
+  },
+  "settings": {
+    "message": "Configurações"
+  },
+  "showContextMenu": {
+    "message": "Mostrar menu de contexto"
+  },
+  "contextMenuHelp": {
+    "message": "Adicione recuperação e histórico ao menu das páginas. O histórico da barra de ferramentas fica sempre disponível."
+  },
+  "filterTitle": {
+    "message": "Somente páginas da web"
+  },
+  "filterHelp": {
+    "message": "Apenas páginas HTTP(S) são elegíveis. Páginas de extensões, em branco, de nova aba e internas são excluídas. Janelas fechadas que contêm essas páginas são ignoradas por completo."
+  },
+  "saved": {
+    "message": "Salvo"
+  },
+  "settingsError": {
+    "message": "Não foi possível ler ou salvar as configurações. Tente novamente."
+  },
+  "justClosed": {
+    "message": "Acabou de fechar"
+  },
+  "earlierClosed": {
+    "message": "Fechadas antes"
+  },
+  "reopenAction": {
+    "message": "Reabrir"
+  },
+  "localOnly": {
+    "message": "Somente no dispositivo"
   }
 }

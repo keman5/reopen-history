@@ -12,7 +12,7 @@
     "message": "閉じたタブ"
   },
   "intro": {
-    "message": "うっかり閉じたページを、もう一度。"
+    "message": "必要なページは、ここに。"
   },
   "pressHint": {
     "message": "クリックで復元 · 長押しで履歴 · Esc で一覧を隠す"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "タブを読み込めませんでした。再試行してください。"
+  },
+  "settings": {
+    "message": "設定"
+  },
+  "showContextMenu": {
+    "message": "右クリックメニューを表示"
+  },
+  "contextMenuHelp": {
+    "message": "ウェブページの右クリックメニューに復元と履歴を追加します。ツールバーの履歴は常に利用できます。"
+  },
+  "filterTitle": {
+    "message": "ウェブページのみ復元"
+  },
+  "filterHelp": {
+    "message": "HTTP(S) ページのみ対象です。拡張機能、空白、新規タブ、ブラウザー内部のページは除外します。除外対象を含む閉じたウィンドウも復元しません。"
+  },
+  "saved": {
+    "message": "保存しました"
+  },
+  "settingsError": {
+    "message": "設定を読み込み・保存できませんでした。再試行してください。"
+  },
+  "justClosed": {
+    "message": "直前に閉じたタブ"
+  },
+  "earlierClosed": {
+    "message": "以前に閉じたタブ"
+  },
+  "reopenAction": {
+    "message": "再び開く"
+  },
+  "localOnly": {
+    "message": "端末内のみに保存"
   }
 }

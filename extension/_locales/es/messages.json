@@ -3,7 +3,7 @@
     "message": "Reabre pestañas cerradas con un clic. Consulta y busca las pestañas cerradas recientemente."
   },
   "actionTitle": {
-    "message": "Reabrir la última pestaña cerrada · Clic derecho para el historial"
+    "message": "Reabrir última pestaña · Clic derecho para historial"
   },
   "reopen": {
     "message": "Reabrir la última pestaña cerrada"
@@ -12,7 +12,7 @@
     "message": "Pestañas cerradas"
   },
   "intro": {
-    "message": "Una segunda oportunidad para las páginas que cerraste por error."
+    "message": "La página que necesitas sigue aquí."
   },
   "pressHint": {
     "message": "Clic para reabrir · Mantén pulsado para el historial · Esc oculta la lista"
@@ -46,5 +46,38 @@
   },
   "loadError": {
     "message": "No se pudieron cargar las pestañas. Inténtalo de nuevo."
+  },
+  "settings": {
+    "message": "Ajustes"
+  },
+  "showContextMenu": {
+    "message": "Mostrar menú contextual"
+  },
+  "contextMenuHelp": {
+    "message": "Añade recuperación e historial al menú de las páginas. El historial de la barra de herramientas siempre está disponible."
+  },
+  "filterTitle": {
+    "message": "Solo páginas web"
+  },
+  "filterHelp": {
+    "message": "Solo se admiten páginas HTTP(S). Se excluyen las páginas de extensiones, en blanco, de nueva pestaña e internas. Las ventanas cerradas que contengan estas páginas se omiten por completo."
+  },
+  "saved": {
+    "message": "Guardado"
+  },
+  "settingsError": {
+    "message": "No se pudieron leer o guardar los ajustes. Inténtalo de nuevo."
+  },
+  "justClosed": {
+    "message": "Recién cerrada"
+  },
+  "earlierClosed": {
+    "message": "Cerradas antes"
+  },
+  "reopenAction": {
+    "message": "Reabrir"
+  },
+  "localOnly": {
+    "message": "Solo en tu dispositivo"
   }
 }

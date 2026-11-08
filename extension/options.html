@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Reopen History</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="toolbar">
+      <a class="brand" href="history.html"><img src="icons/icon48.png" width="28" height="28" alt=""><span>Reopen History</span></a>
+    </header>
+    <div class="content">
+      <div class="heading"><h1 data-i18n="settings"></h1></div>
+    <section class="settings-section">
+      <label class="setting"><input id="context-menu" type="checkbox"><span><strong data-i18n="showContextMenu"></strong><span class="setting-description" data-i18n="contextMenuHelp"></span></span></label>
+    </section>
+    <section class="notice">
+      <h2 data-i18n="filterTitle"></h2>
+      <p data-i18n="filterHelp"></p>
+    </section>
+    <p id="save-status" role="status" aria-live="polite"></p>
+    </div>
+    <footer class="footer"><a href="history.html" data-i18n="history"></a><span data-i18n="localOnly"></span></footer>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
