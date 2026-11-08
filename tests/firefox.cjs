@@ -28,6 +28,7 @@ const { spawn } = require('node:child_process');
     fs.cpSync('dist/firefox', extension, { recursive: true });
     const manifestPath = path.join(extension, 'manifest.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath));
+    assert.equal(Object.hasOwn(manifest.background, 'persistent'), false, 'MV3 background must not declare persistent');
     // Only the disposable test copy can POST assertions to localhost.
     manifest.host_permissions = ['http://127.0.0.1/*'];
     manifest.background.scripts.push('probe.js');

@@ -17,9 +17,8 @@ for (const target of ['chromium', 'firefox', 'safari']) {
   const dir = `dist/${target}`;
   await cp('extension', dir, { recursive: true });
   const manifest = { ...common, permissions: ['storage', 'contextMenus', 'tabs', ...(target === 'safari' ? [] : ['sessions'])] };
-  manifest.background = target === 'chromium' ? { service_worker: 'background.js' } : { scripts: ['core.js', 'background.js'], persistent: false };
+  manifest.background = target === 'chromium' ? { service_worker: 'background.js' } : { scripts: ['core.js', 'background.js'] };
   if (target === 'safari') {
-    delete manifest.background.persistent;
     manifest.options_ui = { page: 'history.html' };
   }
   if (target === 'chromium') manifest.minimum_chrome_version = '120';

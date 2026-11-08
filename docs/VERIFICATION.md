@@ -21,6 +21,8 @@
 
 ## Pending or deliberately limited
 
+Firefox follow-up: removed the unsupported MV3 `background.persistent` field from the shared manifest generator. The earlier static linter did not flag this browser runtime warning; the Firefox runtime check now also asserts that the generated manifest omits it.
+
 - Safari extension activation and recovery in actual Safari have not been performed. The installed host app still requires the user to enable its extension in Safari settings.
 - No physical toolbar clicks, Chrome/Brave/Opera/Vivaldi-specific runtime sessions, Intel Mac build, iOS Safari or Android Firefox testing.
 - No extension store submissions, Mozilla permanent-install signature, Apple notarization or public release upload. Build ZIPs are local install/developer artifacts.
