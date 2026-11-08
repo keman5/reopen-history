@@ -18,7 +18,7 @@
     "message": "Klicken zum Öffnen · Gedrückt halten für Verlauf · Esc blendet Liste aus"
   },
   "safariNotice": {
-    "message": "Safari speichert nach der Installation bis zu 100 geschlossene Web-Tabs lokal. Nur die URL wird wieder geöffnet, nicht der Seitenzustand oder Navigationsverlauf. Private und interne Tabs werden ausgeschlossen."
+    "message": "Safari speichert nach der Installation bis zu 1000 geschlossene Web-Tabs lokal. Nur die URL wird wieder geöffnet, nicht der Seitenzustand oder Navigationsverlauf. Private und interne Tabs werden ausgeschlossen."
   },
   "recent": {
     "message": "KÜRZLICH GESCHLOSSEN"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "Nur auf deinem Gerät"
+  },
+  "previousPage": {
+    "message": "Zurück"
+  },
+  "nextPage": {
+    "message": "Weiter"
+  },
+  "pageStatus": {
+    "message": "Seite $1 von $2"
   }
 }

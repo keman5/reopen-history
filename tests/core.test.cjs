@@ -135,13 +135,13 @@ test('Safari handles simultaneous closures, private tabs, persistence and succes
   assert.equal((await restarted.message({ type: 'list' })).entries[0].url, 'https://first.test');
 });
 
-test('Safari failed tab creation preserves recovery data and limits history to 100', async () => {
-  const closedTabs = Array.from({ length: 110 }, (_, i) => ({ id: String(i), url: `https://example.com/${i}` }));
+test('Safari failed tab creation preserves recovery data and limits history to 1000', async () => {
+  const closedTabs = Array.from({ length: 1010 }, (_, i) => ({ id: String(i), url: `https://example.com/${i}` }));
   const w = worker({ native: false, saved: { closedTabs } });
-  assert.equal((await w.message({ type: 'list' })).entries.length, 100);
+  assert.equal((await w.message({ type: 'list' })).entries.length, 1000);
   w.failCreation();
   assert.equal((await w.message({ type: 'restore' })).error, 'create failed');
-  assert.equal((await w.message({ type: 'list' })).entries.length, 100);
+  assert.equal((await w.message({ type: 'list' })).entries.length, 1000);
 });
 
 test('Messages from other extensions are rejected', () => {
@@ -230,4 +230,33 @@ test('History opens in a tab even when popup APIs are unavailable', async () => 
   delete w.api.windows;
   await w.openHistory();
   assert.equal(w.created[0].url, 'test-extension://history.html');
+});
+
+test('Native history accumulates beyond the API limit, survives restart and deduplicates sessions', async () => {
+  const w = worker();
+  for (let batch = 0; batch < 6; batch++) {
+    w.api.sessions.getRecentlyClosed = async () => Array.from({ length: 25 }, (_, i) => ({
+      lastModified: batch * 25 + i + 1, tab: { sessionId: String(batch * 25 + i), url: `https://archive.test/${batch * 25 + i}` }
+    }));
+    w.api.sessions.onChanged.fire();
+    assert.equal((await w.message({ type: 'list' })).entries.length, (batch + 1) * 25);
+  }
+  assert.equal(w.storage.closedTabs.length, 150);
+  const restarted = worker({ saved: w.storage });
+  const result = await restarted.message({ type: 'list' });
+  assert.equal(result.entries.length, 150);
+  assert.equal(result.entries[0].id, '149');
+  await restarted.message({ type: 'restore', id: '0' });
+  assert.deepEqual(structuredClone(restarted.created), [{ url: 'https://archive.test/0', pinned: false }]);
+  assert.equal(restarted.restored.length, 0);
+  assert.equal(restarted.storage.closedTabs.length, 149);
+});
+
+test('Expired native history preserves data if URL recovery fails and caps at 1000', async () => {
+  const closedTabs = Array.from({ length: 1010 }, (_, i) => ({ id: String(i), url: `https://archive.test/${i}`, closedAt: 1010 - i }));
+  const w = worker({ saved: { closedTabs } });
+  assert.equal((await w.message({ type: 'list' })).entries.length, 1000);
+  w.failCreation();
+  assert.equal((await w.message({ type: 'restore', id: '0' })).error, 'create failed');
+  assert.equal((await w.message({ type: 'list' })).entries.length, 1000);
 });

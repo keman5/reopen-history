@@ -19,6 +19,8 @@ const status = document.querySelector('#status');
 const search = document.querySelector('#search');
 const reopen = document.querySelector('#reopen');
 const history = document.querySelector('#history');
+const PAGE_SIZE = 100;
+let page = 0;
 let recent = [];
 let busy = false;
 let revision = 0;
@@ -43,17 +45,18 @@ function render() {
   const filtered = recent.filter(item => `${item.title} ${item.url}`.toLocaleLowerCase().includes(query));
   list.replaceChildren();
   const latest = recent[0];
-  document.querySelector('.latest-section').hidden = !latest || !filtered.includes(latest);
-  document.querySelector('#latest-title').textContent = latest ? entryTitle(latest) : '';
-  document.querySelector('#latest-url').textContent = latest ? address(latest.url) : '';
-  document.querySelector('#latest-url').title = latest?.url || '';
-  reopen.setAttribute('aria-label', latest ? `${entryTitle(latest)} · ${t('reopenAction')}` : t('reopenAction'));
-  document.querySelector('#count').textContent = String(Math.max(0, recent.length - 1));
+  reopen.setAttribute('aria-label', t('reopenAction'));
+  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  page = Math.min(page, pages - 1);
+  document.querySelector('#pagination').hidden = pages === 1;
+  document.querySelector('#previous').disabled = page === 0;
+  document.querySelector('#next').disabled = page === pages - 1;
+  document.querySelector('#page-status').textContent = t('pageStatus', [String(page + 1), String(pages)]);
   const empty = document.querySelector('#empty');
   empty.hidden = filtered.length > 0;
   empty.textContent = t(recent.length ? 'noResults' : 'empty');
   reopen.disabled = busy || recent.length === 0;
-  for (const entry of filtered.filter(item => item !== latest)) {
+  for (const entry of filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)) {
     const row = document.createElement('li');
     const button = document.createElement('button');
     button.className = 'entry';
@@ -80,6 +83,12 @@ function render() {
       const value = Math.floor(seconds / ({ second: 1, minute: 60, hour: 3600, day: 86400 }[unit]));
       time.textContent = new Intl.RelativeTimeFormat(api.i18n.getUILanguage(), { numeric: 'auto', style: 'short' }).format(-value, unit);
       time.title = date.toLocaleString(api.i18n.getUILanguage());
+    }
+    if (entry === latest) {
+      const badge = document.createElement('span');
+      badge.className = 'latest-badge';
+      badge.textContent = t('justClosed');
+      subtitle.append(' · ', badge);
     }
     text.append(title, subtitle);
     const arrow = makeIcon('return');
@@ -125,7 +134,9 @@ ReopenCore.bindPress(reopen, {
   shortPress: () => restore(),
   longPress: () => { history.hidden = false; reopen.setAttribute('aria-expanded', 'true'); }
 });
-search.addEventListener('input', render);
+search.addEventListener('input', () => { page = 0; render(); });
+document.querySelector('#previous').addEventListener('click', () => { page--; render(); history.scrollIntoView({ block: 'start' }); });
+document.querySelector('#next').addEventListener('click', () => { page++; render(); history.scrollIntoView({ block: 'start' }); });
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') { history.hidden = true; reopen.setAttribute('aria-expanded', 'false'); }
 });

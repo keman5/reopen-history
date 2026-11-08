@@ -18,7 +18,7 @@
     "message": "Click to reopen · Hold for history · Esc to hide the list"
   },
   "safariNotice": {
-    "message": "Safari records up to 100 closed web tabs locally after installation. Reopening restores the URL, not page state or back/forward history. Private and internal tabs are excluded."
+    "message": "Safari records up to 1000 closed web tabs locally after installation. Reopening restores the URL, not page state or back/forward history. Private and internal tabs are excluded."
   },
   "recent": {
     "message": "RECENTLY CLOSED"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "On your device"
+  },
+  "previousPage": {
+    "message": "Previous"
+  },
+  "nextPage": {
+    "message": "Next"
+  },
+  "pageStatus": {
+    "message": "Page $1 of $2"
   }
 }

@@ -18,7 +18,7 @@
     "message": "Cliquer pour rouvrir · Maintenir pour l’historique · Échap masque la liste"
   },
   "safariNotice": {
-    "message": "Safari conserve localement jusqu’à 100 onglets web fermés après l’installation. Seule l’URL est rouverte, sans l’état de la page ni son historique de navigation. Les onglets privés et internes sont exclus."
+    "message": "Safari conserve localement jusqu’à 1000 onglets web fermés après l’installation. Seule l’URL est rouverte, sans l’état de la page ni son historique de navigation. Les onglets privés et internes sont exclus."
   },
   "recent": {
     "message": "RÉCEMMENT FERMÉS"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "Sur votre appareil"
+  },
+  "previousPage": {
+    "message": "Précédent"
+  },
+  "nextPage": {
+    "message": "Suivant"
+  },
+  "pageStatus": {
+    "message": "Page $1 sur $2"
   }
 }

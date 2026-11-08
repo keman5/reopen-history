@@ -18,7 +18,7 @@
     "message": "클릭하여 복원 · 길게 눌러 기록 보기 · Esc로 목록 숨기기"
   },
   "safariNotice": {
-    "message": "Safari는 설치 후 닫은 웹 탭을 기기에 최대 100개 저장합니다. URL만 다시 열며 페이지 상태와 앞뒤 탐색 기록은 복원하지 않습니다. 비공개 탭과 내부 페이지는 제외됩니다."
+    "message": "Safari는 설치 후 닫은 웹 탭을 기기에 최대 1000개 저장합니다. URL만 다시 열며 페이지 상태와 앞뒤 탐색 기록은 복원하지 않습니다. 비공개 탭과 내부 페이지는 제외됩니다."
   },
   "recent": {
     "message": "최근 닫은 탭"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "기기에만 저장"
+  },
+  "previousPage": {
+    "message": "이전"
+  },
+  "nextPage": {
+    "message": "다음"
+  },
+  "pageStatus": {
+    "message": "$1 / $2 페이지"
   }
 }

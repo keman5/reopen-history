@@ -18,7 +18,7 @@
     "message": "单击恢复 · 长按显示历史 · Esc 收起列表"
   },
   "safariNotice": {
-    "message": "Safari 在安装后仅在本机记录最多 100 个已关闭的网页标签。重新打开只能恢复网址，不能恢复页面状态或前进后退记录。隐私和浏览器内部标签页不会记录。"
+    "message": "Safari 在安装后仅在本机记录最多 1000 个已关闭的网页标签。重新打开只能恢复网址，不能恢复页面状态或前进后退记录。隐私和浏览器内部标签页不会记录。"
   },
   "recent": {
     "message": "最近关闭"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "数据仅在本机"
+  },
+  "previousPage": {
+    "message": "上一页"
+  },
+  "nextPage": {
+    "message": "下一页"
+  },
+  "pageStatus": {
+    "message": "第 $1 / $2 页"
   }
 }

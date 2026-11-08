@@ -18,7 +18,7 @@
     "message": "Clic para reabrir · Mantén pulsado para el historial · Esc oculta la lista"
   },
   "safariNotice": {
-    "message": "Safari guarda localmente hasta 100 pestañas web cerradas tras la instalación. Solo reabre la URL, sin el estado de la página ni su historial de navegación. Se excluyen las pestañas privadas e internas."
+    "message": "Safari guarda localmente hasta 1000 pestañas web cerradas tras la instalación. Solo reabre la URL, sin el estado de la página ni su historial de navegación. Se excluyen las pestañas privadas e internas."
   },
   "recent": {
     "message": "CERRADAS RECIENTEMENTE"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "Solo en tu dispositivo"
+  },
+  "previousPage": {
+    "message": "Anterior"
+  },
+  "nextPage": {
+    "message": "Siguiente"
+  },
+  "pageStatus": {
+    "message": "Página $1 de $2"
   }
 }

@@ -3,14 +3,15 @@ const api = globalThis.browser || globalThis.chrome;
 const { isRestorable, sessionsToEntries } = ReopenCore;
 const nativeSessions = Boolean(api.sessions?.getRecentlyClosed);
 const t = (key, substitutions) => api.i18n.getMessage(key, substitutions);
-const HISTORY_LIMIT = 100;
+const HISTORY_LIMIT = 1000;
 let queue = Promise.resolve();
 let liveTabs = {};
 let closedTabs = [];
+let nativeIds = new Set();
 let starting = true;
 const removedWhileStarting = new Set();
 
-// Serialize Safari storage changes and restores so simultaneous closes cannot lose records.
+// Serialize history changes and restores so simultaneous events cannot lose records.
 function serial(task) {
   const result = queue.then(task);
   queue = result.catch(error => console.error('Reopen History:', error));
@@ -18,7 +19,16 @@ function serial(task) {
 }
 
 async function entries() {
-  if (nativeSessions) return sessionsToEntries(await api.sessions.getRecentlyClosed({ maxResults: 25 }));
+  if (nativeSessions) {
+    const fresh = sessionsToEntries(await api.sessions.getRecentlyClosed({ maxResults: 25 }));
+    nativeIds = new Set(fresh.map(entry => entry.id));
+    const merged = [...fresh, ...closedTabs.filter(entry => !nativeIds.has(entry.id))]
+      .sort((a, b) => b.closedAt - a.closedAt).slice(0, HISTORY_LIMIT);
+    if (JSON.stringify(merged) !== JSON.stringify(closedTabs)) {
+      closedTabs = merged;
+      await api.storage.local.set({ closedTabs });
+    }
+  }
   return closedTabs;
 }
 
@@ -26,14 +36,14 @@ async function restore(id) {
   const recent = await entries();
   const entry = id ? recent.find(item => item.id === id) : recent[0];
   if (!entry) throw new Error(t(id ? 'stale' : 'empty'));
-  if (nativeSessions) await api.sessions.restore(entry.id);
+  if (nativeSessions && nativeIds.has(entry.id)) await api.sessions.restore(entry.id);
   else {
     if (!isRestorable(entry)) throw new Error(t('stale'));
     await api.tabs.create({ url: entry.url, pinned: Boolean(entry.pinned) });
-    // Remove only after the new tab has been created successfully.
-    closedTabs = closedTabs.filter(item => item.id !== entry.id);
-    await api.storage.local.set({ closedTabs });
   }
+  // Remove only after recovery succeeds, preserving data on failure.
+  closedTabs = closedTabs.filter(item => item.id !== entry.id);
+  await api.storage.local.set({ closedTabs });
   await updateBadge();
 }
 
@@ -84,7 +94,12 @@ api.runtime.onMessage.addListener((message, sender, respond) => {
 
 if (nativeSessions) {
   api.sessions.onChanged.addListener(() => { serial(updateBadge).catch(console.error); });
-  serial(updateBadge);
+  serial(async () => {
+    const saved = await api.storage.local.get('closedTabs');
+    closedTabs = (saved.closedTabs || []).filter(isRestorable).slice(0, HISTORY_LIMIT);
+    await api.storage.local.set({ closedTabs });
+    await updateBadge();
+  });
 } else {
   serial(async () => {
     const saved = await api.storage.local.get(['closedTabs', 'liveTabs']);
@@ -97,7 +112,7 @@ if (nativeSessions) {
     liveTabs = snapshots;
     starting = false;
     removedWhileStarting.clear();
-    await api.storage.local.set({ liveTabs });
+    await api.storage.local.set({ closedTabs, liveTabs });
     await updateBadge();
   });
   const remember = tab => serial(async () => {

@@ -133,12 +133,51 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
     const recoveryTab = await context.newPage();
     await recoveryTab.goto(base + '/history-restore');
     await recoveryTab.close();
-    await historyTab.getByRole('button', { name: 'Recovery test /history-restore' }).waitFor();
+    await historyTab.locator('.entry').filter({ hasText: 'Recovery test /history-restore' }).waitFor({ state: 'attached' });
     const historyRestore = context.waitForEvent('page');
     await historyTab.locator('#reopen').click();
     await (await historyRestore).waitForURL(base + '/history-restore');
     assert.equal(historyTab.isClosed(), false);
     console.log('PASS: history page restores the latest real tab and stays open');
+
+    // Persist enough archived entries to exercise the real list and pagination path.
+    const archived = await worker.evaluate(() => serial(async () => {
+      const saved = closedTabs;
+      closedTabs = Array.from({ length: 205 }, (_, i) => ({
+        id: `archive-${i}`, title: `Archive ${i}`, url: `https://archive.test/${i}`,
+        closedAt: Date.now() - i * 1000, tabCount: 0
+      }));
+      await api.storage.local.set({ closedTabs });
+      return saved;
+    }));
+    await history.evaluate(() => load());
+    assert.equal(await history.locator('h1').count(), 0);
+    assert.equal(await history.locator('.entry').count(), 100);
+    assert.equal(await history.locator('.latest-badge').count(), 1);
+    assert.equal(await history.locator('#previous').isDisabled(), true);
+    await history.locator('#next').click();
+    assert.equal(await history.locator('.entry').count(), 100);
+    assert.equal(await history.locator('.latest-badge').count(), 0);
+    await history.locator('#next').click();
+    assert.equal(await history.locator('.entry').count(), 5);
+    assert.equal(await history.locator('#next').isDisabled(), true);
+    await history.locator('#previous').click();
+    assert.equal(await history.locator('.title').first().textContent(), 'Archive 100');
+    await history.getByRole('searchbox').fill('Archive 204');
+    assert.equal(await history.locator('.entry').count(), 1);
+    assert.equal(await history.locator('#pagination').isVisible(), false);
+    assert.equal(await history.locator('.latest-badge').count(), 0);
+    await history.getByRole('searchbox').fill('');
+    assert.equal(await history.locator('.title').first().textContent(), 'Archive 0');
+    await history.locator('#next').click();
+    await history.locator('#next').click();
+    await worker.evaluate(saved => serial(async () => {
+      closedTabs = saved;
+      await api.storage.local.set({ closedTabs });
+    }), archived);
+    await history.evaluate(() => load());
+    assert.equal(await history.locator('#pagination').isVisible(), false);
+    console.log('PASS: unified list, latest-only badge, 100-entry pages, navigation, search reset and shrinking-page clamp');
 
     // UI strings and unsafe page titles must be treated as plain text.
     const rendered = await history.evaluate(() => {

@@ -18,7 +18,7 @@
     "message": "Clic per riaprire · Tieni premuto per la cronologia · Esc nasconde l’elenco"
   },
   "safariNotice": {
-    "message": "Safari salva localmente fino a 100 schede web chiuse dopo l’installazione. Riapre solo l’URL, non lo stato della pagina o la cronologia di navigazione. Le schede private e interne sono escluse."
+    "message": "Safari salva localmente fino a 1000 schede web chiuse dopo l’installazione. Riapre solo l’URL, non lo stato della pagina o la cronologia di navigazione. Le schede private e interne sono escluse."
   },
   "recent": {
     "message": "CHIUSE DI RECENTE"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "Solo sul dispositivo"
+  },
+  "previousPage": {
+    "message": "Precedente"
+  },
+  "nextPage": {
+    "message": "Successiva"
+  },
+  "pageStatus": {
+    "message": "Pagina $1 di $2"
   }
 }

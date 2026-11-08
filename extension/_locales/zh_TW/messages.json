@@ -18,7 +18,7 @@
     "message": "按一下還原 · 長按顯示記錄 · Esc 收合清單"
   },
   "safariNotice": {
-    "message": "Safari 安裝後僅在本機記錄最多 100 個已關閉的網頁分頁。重新開啟只能還原網址，無法還原頁面狀態或上一頁／下一頁記錄。不記錄私密和瀏覽器內部分頁。"
+    "message": "Safari 安裝後僅在本機記錄最多 1000 個已關閉的網頁分頁。重新開啟只能還原網址，無法還原頁面狀態或上一頁／下一頁記錄。不記錄私密和瀏覽器內部分頁。"
   },
   "recent": {
     "message": "最近關閉"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "資料僅儲存在本機"
+  },
+  "previousPage": {
+    "message": "上一頁"
+  },
+  "nextPage": {
+    "message": "下一頁"
+  },
+  "pageStatus": {
+    "message": "第 $1 / $2 頁"
   }
 }

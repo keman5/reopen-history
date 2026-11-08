@@ -23,7 +23,8 @@
         title: session.tab?.title || session.tab?.url || tabs[0]?.title || tabs[0]?.url || '',
         url: session.tab?.url || tabs[0]?.url || '',
         closedAt: session.lastModified * 1000,
-        tabCount: session.window ? tabs.length : 0
+        tabCount: session.window ? tabs.length : 0,
+        pinned: Boolean(session.tab?.pinned)
       }];
     });
   }

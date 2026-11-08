@@ -18,7 +18,7 @@
     "message": "Clique para reabrir · Segure para ver o histórico · Esc oculta a lista"
   },
   "safariNotice": {
-    "message": "O Safari salva localmente até 100 abas da web fechadas após a instalação. Apenas a URL é reaberta, sem o estado da página ou histórico de navegação. Abas privadas e internas são excluídas."
+    "message": "O Safari salva localmente até 1000 abas da web fechadas após a instalação. Apenas a URL é reaberta, sem o estado da página ou histórico de navegação. Abas privadas e internas são excluídas."
   },
   "recent": {
     "message": "FECHADAS RECENTEMENTE"
@@ -79,5 +79,14 @@
   },
   "localOnly": {
     "message": "Somente no dispositivo"
+  },
+  "previousPage": {
+    "message": "Anterior"
+  },
+  "nextPage": {
+    "message": "Próxima"
+  },
+  "pageStatus": {
+    "message": "Página $1 de $2"
   }
 }

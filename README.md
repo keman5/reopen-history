@@ -21,7 +21,9 @@ A small, local-only browser extension for recovering closed tabs. Built independ
 | Firefox 142+ desktop | `~/downloads/dist/reopen-history-firefox-v1.0.1` | Native `sessions` restore |
 | Safari 16+ on macOS 13+ | `~/downloads/dist/reopen-history-safari-v1.0.1` + generated macOS host app | Local URL recovery; see limitations below |
 
-Chrome/Edge/Firefox show the browser's most recent 25 **sessions**. Only normal HTTP(S) pages are eligible; extension, blank, new-tab and browser-internal pages are excluded from history, badge counts and recovery. A closed window is shown as one entry only when every tab is eligible, because native restoration reopens the entire window. Mixed windows are skipped without deleting browser history. Native history is owned by the browser, may expire or disappear after restart, and is not an unlimited history archive. Safari stores the latest 100 eligible closed tabs on your device and retains them across background restarts. The Safari host app targets macOS 13 and newer.
+The history page uses one searchable list, marks the newest entry with a badge, and shows **100 entries per page**. All browsers retain up to **1,000 eligible entries locally**. Chrome/Edge/Firefox initially import at most 25 browser-provided sessions and accumulate additional closures while active; unavailable older sessions cannot be backfilled. Available sessions use native recovery; expired archived entries reopen their saved URL only (a window entry falls back to its first tab). Safari uses URL recovery throughout.
+
+Only normal HTTP(S) pages are eligible; extension, blank, new-tab and browser-internal pages are excluded from history, badge counts and recovery. A closed window is shown as one entry only when every tab is eligible, because native restoration reopens the entire window. Mixed windows are skipped without deleting browser history. The Safari host app targets macOS 13 and newer.
 
 Safari does not implement `sessions`. Its fallback begins recording after the extension is enabled, saves only normal HTTP(S) tab URLs, titles and pinned state, and excludes private/internal/file/data pages. It cannot restore form contents, scroll position, back/forward history, window grouping, or tabs closed while the extension is disabled or not running. iOS Safari and Firefox for Android are not supported by this release.
 
@@ -64,7 +66,7 @@ npm run test:browser:safari
 npm run test:firefox
 ```
 
-The browser check runs installed Microsoft Edge **headlessly** in a disposable profile and serves test pages on localhost. It never touches your existing browser profile or foreground windows. It verifies actual native-session recovery, list ordering, searching, short/long press, Escape, options persistence, invalid-page filtering, and safe rendering of untrusted titles. It invokes the toolbar's shared restore function headlessly; it does not prove a physical click on the native toolbar. Use `TEST_BROWSER=chromium` to test a separately installed Playwright Chromium build. The Safari fallback check runs its scripts in headless Edge with only the background manifest adapted; it does not verify Safari itself. The Firefox check uses `web-ext` from npm, an installed `/Applications/Firefox.app`, and a disposable extension/profile with a localhost-only result reporter.
+The browser check runs installed Microsoft Edge **headlessly** in a disposable profile and serves test pages on localhost. It never touches your existing browser profile or foreground windows. It verifies actual native-session recovery, list ordering, 100-entry pagination, searching, short/long press, Escape, options persistence, invalid-page filtering, and safe rendering of untrusted titles. It invokes the toolbar's shared restore function headlessly; it does not prove a physical click on the native toolbar. Use `TEST_BROWSER=chromium` to test a separately installed Playwright Chromium build. The Safari fallback check runs its scripts in headless Edge with only the background manifest adapted; it does not verify Safari itself. The Firefox check uses `web-ext` from npm, an installed `/Applications/Firefox.app`, and a disposable extension/profile with a localhost-only result reporter.
 
 ## Languages
 
@@ -74,7 +76,7 @@ English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, E
 
 - `sessions` (Chromium/Firefox): list and restore the browser's closed sessions.
 - `contextMenus`: toolbar history menu; optional webpage recovery/history menus are disabled by default.
-- `storage`: local context-menu preference; Safari also stores local history and cached tab metadata. Other builds do not persist native session history.
+- `storage`: local context-menu preference and up to 1,000 archived history entries; Safari also caches eligible open-tab metadata.
 - `tabs`: Safari needs URLs and titles to track closed tabs; Chromium and Firefox also require this permission to display and search native session titles and URLs.
 
 No content scripts, host permissions, remote favicons, telemetry, accounts, external libraries or network requests are used by the extension. Restoring a tab naturally loads its website. Browsing metadata is sensitive even when it stays local; see [PRIVACY.md](PRIVACY.md).
