@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "Rouvrez les onglets fermés en un clic. Consultez et recherchez les onglets récemment fermés."
+  },
+  "actionTitle": {
+    "message": "Rouvrir le dernier onglet fermé · Clic droit pour l’historique"
+  },
+  "reopen": {
+    "message": "Rouvrir le dernier onglet fermé"
+  },
+  "history": {
+    "message": "Onglets fermés"
+  },
+  "intro": {
+    "message": "Une seconde chance pour les pages fermées par erreur."
+  },
+  "pressHint": {
+    "message": "Cliquer pour rouvrir · Maintenir pour l’historique · Échap masque la liste"
+  },
+  "safariNotice": {
+    "message": "Safari conserve localement jusqu’à 100 onglets web fermés après l’installation. Seule l’URL est rouverte, sans l’état de la page ni son historique de navigation. Les onglets privés et internes sont exclus."
+  },
+  "recent": {
+    "message": "RÉCEMMENT FERMÉS"
+  },
+  "search": {
+    "message": "Rechercher un titre ou une adresse"
+  },
+  "privacy": {
+    "message": "Sur votre appareil. Sans statistiques, compte ni requête externe."
+  },
+  "empty": {
+    "message": "Aucun onglet récemment fermé."
+  },
+  "noResults": {
+    "message": "Aucun onglet correspondant."
+  },
+  "windowTabs": {
+    "message": "Fenêtre fermée · $1 onglets"
+  },
+  "untitled": {
+    "message": "Onglet sans titre"
+  },
+  "stale": {
+    "message": "Cet onglet n’est plus disponible. Actualisez la liste."
+  },
+  "loadError": {
+    "message": "Impossible de charger les onglets. Réessayez."
+  }
+}

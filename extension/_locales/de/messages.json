@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "Geschlossene Tabs mit einem Klick öffnen. Kürzlich geschlossene Tabs durchsuchen."
+  },
+  "actionTitle": {
+    "message": "Letzten geschlossenen Tab öffnen · Rechtsklick für Verlauf"
+  },
+  "reopen": {
+    "message": "Letzten geschlossenen Tab öffnen"
+  },
+  "history": {
+    "message": "Geschlossene Tabs"
+  },
+  "intro": {
+    "message": "Eine zweite Chance für versehentlich geschlossene Seiten."
+  },
+  "pressHint": {
+    "message": "Klicken zum Öffnen · Gedrückt halten für Verlauf · Esc blendet Liste aus"
+  },
+  "safariNotice": {
+    "message": "Safari speichert nach der Installation bis zu 100 geschlossene Web-Tabs lokal. Nur die URL wird wieder geöffnet, nicht der Seitenzustand oder Navigationsverlauf. Private und interne Tabs werden ausgeschlossen."
+  },
+  "recent": {
+    "message": "KÜRZLICH GESCHLOSSEN"
+  },
+  "search": {
+    "message": "Titel oder Adressen suchen"
+  },
+  "privacy": {
+    "message": "Nur auf deinem Gerät. Keine Analyse, Konten oder externen Anfragen."
+  },
+  "empty": {
+    "message": "Keine kürzlich geschlossenen Tabs."
+  },
+  "noResults": {
+    "message": "Keine passenden Tabs."
+  },
+  "windowTabs": {
+    "message": "Geschlossenes Fenster · $1 Tabs"
+  },
+  "untitled": {
+    "message": "Tab ohne Titel"
+  },
+  "stale": {
+    "message": "Dieser Tab ist nicht mehr verfügbar. Liste aktualisieren."
+  },
+  "loadError": {
+    "message": "Tabs konnten nicht geladen werden. Bitte erneut versuchen."
+  }
+}

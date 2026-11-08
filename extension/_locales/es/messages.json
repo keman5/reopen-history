@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "Reabre pestañas cerradas con un clic. Consulta y busca las pestañas cerradas recientemente."
+  },
+  "actionTitle": {
+    "message": "Reabrir la última pestaña cerrada · Clic derecho para el historial"
+  },
+  "reopen": {
+    "message": "Reabrir la última pestaña cerrada"
+  },
+  "history": {
+    "message": "Pestañas cerradas"
+  },
+  "intro": {
+    "message": "Una segunda oportunidad para las páginas que cerraste por error."
+  },
+  "pressHint": {
+    "message": "Clic para reabrir · Mantén pulsado para el historial · Esc oculta la lista"
+  },
+  "safariNotice": {
+    "message": "Safari guarda localmente hasta 100 pestañas web cerradas tras la instalación. Solo reabre la URL, sin el estado de la página ni su historial de navegación. Se excluyen las pestañas privadas e internas."
+  },
+  "recent": {
+    "message": "CERRADAS RECIENTEMENTE"
+  },
+  "search": {
+    "message": "Buscar títulos o direcciones"
+  },
+  "privacy": {
+    "message": "Solo en tu dispositivo. Sin estadísticas, cuentas ni solicitudes externas."
+  },
+  "empty": {
+    "message": "No hay pestañas cerradas recientemente."
+  },
+  "noResults": {
+    "message": "No hay pestañas coincidentes."
+  },
+  "windowTabs": {
+    "message": "Ventana cerrada · $1 pestañas"
+  },
+  "untitled": {
+    "message": "Pestaña sin título"
+  },
+  "stale": {
+    "message": "Esta pestaña ya no está disponible. Actualiza la lista."
+  },
+  "loadError": {
+    "message": "No se pudieron cargar las pestañas. Inténtalo de nuevo."
+  }
+}

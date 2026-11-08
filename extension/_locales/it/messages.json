@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "Riapri le schede chiuse con un clic. Consulta e cerca le schede chiuse di recente."
+  },
+  "actionTitle": {
+    "message": "Riapri l’ultima scheda chiusa · Clic destro per la cronologia"
+  },
+  "reopen": {
+    "message": "Riapri l’ultima scheda chiusa"
+  },
+  "history": {
+    "message": "Schede chiuse"
+  },
+  "intro": {
+    "message": "Una seconda possibilità per le pagine chiuse per errore."
+  },
+  "pressHint": {
+    "message": "Clic per riaprire · Tieni premuto per la cronologia · Esc nasconde l’elenco"
+  },
+  "safariNotice": {
+    "message": "Safari salva localmente fino a 100 schede web chiuse dopo l’installazione. Riapre solo l’URL, non lo stato della pagina o la cronologia di navigazione. Le schede private e interne sono escluse."
+  },
+  "recent": {
+    "message": "CHIUSE DI RECENTE"
+  },
+  "search": {
+    "message": "Cerca titoli o indirizzi"
+  },
+  "privacy": {
+    "message": "Solo sul tuo dispositivo. Niente analisi, account o richieste esterne."
+  },
+  "empty": {
+    "message": "Nessuna scheda chiusa di recente."
+  },
+  "noResults": {
+    "message": "Nessuna scheda corrispondente."
+  },
+  "windowTabs": {
+    "message": "Finestra chiusa · $1 schede"
+  },
+  "untitled": {
+    "message": "Scheda senza titolo"
+  },
+  "stale": {
+    "message": "Questa scheda non è più disponibile. Aggiorna l’elenco."
+  },
+  "loadError": {
+    "message": "Impossibile caricare le schede. Riprova."
+  }
+}

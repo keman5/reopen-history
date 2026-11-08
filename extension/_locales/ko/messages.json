@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "클릭 한 번으로 닫은 탭을 복원하고 최근 닫은 탭을 검색하세요."
+  },
+  "actionTitle": {
+    "message": "최근 닫은 탭 복원 · 우클릭으로 기록 보기"
+  },
+  "reopen": {
+    "message": "최근 닫은 탭 복원"
+  },
+  "history": {
+    "message": "닫은 탭"
+  },
+  "intro": {
+    "message": "실수로 닫은 페이지를 다시 만나세요."
+  },
+  "pressHint": {
+    "message": "클릭하여 복원 · 길게 눌러 기록 보기 · Esc로 목록 숨기기"
+  },
+  "safariNotice": {
+    "message": "Safari는 설치 후 닫은 웹 탭을 기기에 최대 100개 저장합니다. URL만 다시 열며 페이지 상태와 앞뒤 탐색 기록은 복원하지 않습니다. 비공개 탭과 내부 페이지는 제외됩니다."
+  },
+  "recent": {
+    "message": "최근 닫은 탭"
+  },
+  "search": {
+    "message": "제목 또는 주소 검색"
+  },
+  "privacy": {
+    "message": "기기에만 저장됩니다. 분석, 계정, 외부 요청이 없습니다."
+  },
+  "empty": {
+    "message": "최근 닫은 탭이 없습니다."
+  },
+  "noResults": {
+    "message": "일치하는 탭이 없습니다."
+  },
+  "windowTabs": {
+    "message": "닫은 창 · 탭 $1개"
+  },
+  "untitled": {
+    "message": "제목 없는 탭"
+  },
+  "stale": {
+    "message": "더 이상 사용할 수 없는 탭입니다. 목록을 새로 고치세요."
+  },
+  "loadError": {
+    "message": "닫은 탭을 불러오지 못했습니다. 다시 시도하세요."
+  }
+}

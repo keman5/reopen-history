@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "单击恢复关闭的标签页，浏览和搜索最近关闭的标签页历史。"
+  },
+  "actionTitle": {
+    "message": "恢复刚关闭的标签页 · 右键查看历史"
+  },
+  "reopen": {
+    "message": "恢复刚关闭的标签页"
+  },
+  "history": {
+    "message": "已关闭的标签页"
+  },
+  "intro": {
+    "message": "找回那些不小心关闭的页面。"
+  },
+  "pressHint": {
+    "message": "单击恢复 · 长按显示历史 · Esc 收起列表"
+  },
+  "safariNotice": {
+    "message": "Safari 在安装后仅在本机记录最多 100 个已关闭的网页标签。重新打开只能恢复网址，不能恢复页面状态或前进后退记录。隐私和浏览器内部标签页不会记录。"
+  },
+  "recent": {
+    "message": "最近关闭"
+  },
+  "search": {
+    "message": "搜索标题或网址"
+  },
+  "privacy": {
+    "message": "数据仅在本机。无统计、无账号、无外部请求。"
+  },
+  "empty": {
+    "message": "没有最近关闭的标签页。"
+  },
+  "noResults": {
+    "message": "没有匹配的标签页。"
+  },
+  "windowTabs": {
+    "message": "已关闭的窗口 · $1 个标签页"
+  },
+  "untitled": {
+    "message": "无标题标签页"
+  },
+  "stale": {
+    "message": "此标签页已不可用，请刷新列表。"
+  },
+  "loadError": {
+    "message": "无法载入关闭记录，请重试。"
+  }
+}

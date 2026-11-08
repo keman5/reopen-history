@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "クリックで閉じたタブを復元。最近閉じたタブを一覧・検索できます。"
+  },
+  "actionTitle": {
+    "message": "最後に閉じたタブを復元 · 右クリックで履歴"
+  },
+  "reopen": {
+    "message": "最後に閉じたタブを復元"
+  },
+  "history": {
+    "message": "閉じたタブ"
+  },
+  "intro": {
+    "message": "うっかり閉じたページを、もう一度。"
+  },
+  "pressHint": {
+    "message": "クリックで復元 · 長押しで履歴 · Esc で一覧を隠す"
+  },
+  "safariNotice": {
+    "message": "Safari はインストール後に閉じたウェブタブを最大100件、端末内に保存します。URLのみ再度開き、ページ状態や戻る・進む履歴は復元できません。プライベートタブと内部ページは対象外です。"
+  },
+  "recent": {
+    "message": "最近閉じたタブ"
+  },
+  "search": {
+    "message": "タイトルやアドレスを検索"
+  },
+  "privacy": {
+    "message": "端末内のみ。分析・アカウント・外部通信なし。"
+  },
+  "empty": {
+    "message": "最近閉じたタブはありません。"
+  },
+  "noResults": {
+    "message": "一致するタブはありません。"
+  },
+  "windowTabs": {
+    "message": "閉じたウィンドウ · $1 タブ"
+  },
+  "untitled": {
+    "message": "無題のタブ"
+  },
+  "stale": {
+    "message": "このタブは利用できません。一覧を更新してください。"
+  },
+  "loadError": {
+    "message": "タブを読み込めませんでした。再試行してください。"
+  }
+}

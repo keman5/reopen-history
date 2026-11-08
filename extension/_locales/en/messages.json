@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "Reopen closed tabs in one click. Browse and search recently closed tabs."
+  },
+  "actionTitle": {
+    "message": "Reopen last closed tab · Right-click for history"
+  },
+  "reopen": {
+    "message": "Reopen last closed tab"
+  },
+  "history": {
+    "message": "Closed tabs"
+  },
+  "intro": {
+    "message": "A second chance for the tabs you meant to keep."
+  },
+  "pressHint": {
+    "message": "Click to reopen · Hold for history · Esc to hide the list"
+  },
+  "safariNotice": {
+    "message": "Safari records up to 100 closed web tabs locally after installation. Reopening restores the URL, not page state or back/forward history. Private and internal tabs are excluded."
+  },
+  "recent": {
+    "message": "RECENTLY CLOSED"
+  },
+  "search": {
+    "message": "Search titles or addresses"
+  },
+  "privacy": {
+    "message": "On your device. No analytics, accounts or external requests."
+  },
+  "empty": {
+    "message": "No recently closed tabs."
+  },
+  "noResults": {
+    "message": "No matching tabs."
+  },
+  "windowTabs": {
+    "message": "Closed window · $1 tabs"
+  },
+  "untitled": {
+    "message": "Untitled tab"
+  },
+  "stale": {
+    "message": "This tab is no longer available. Refresh the list."
+  },
+  "loadError": {
+    "message": "Could not load closed tabs. Try again."
+  }
+}

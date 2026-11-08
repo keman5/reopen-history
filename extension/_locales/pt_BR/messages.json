@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "Reabra abas fechadas com um clique. Consulte e pesquise as abas fechadas recentemente."
+  },
+  "actionTitle": {
+    "message": "Reabrir a última aba fechada · Clique direito para o histórico"
+  },
+  "reopen": {
+    "message": "Reabrir a última aba fechada"
+  },
+  "history": {
+    "message": "Abas fechadas"
+  },
+  "intro": {
+    "message": "Uma segunda chance para as páginas fechadas por engano."
+  },
+  "pressHint": {
+    "message": "Clique para reabrir · Segure para ver o histórico · Esc oculta a lista"
+  },
+  "safariNotice": {
+    "message": "O Safari salva localmente até 100 abas da web fechadas após a instalação. Apenas a URL é reaberta, sem o estado da página ou histórico de navegação. Abas privadas e internas são excluídas."
+  },
+  "recent": {
+    "message": "FECHADAS RECENTEMENTE"
+  },
+  "search": {
+    "message": "Pesquisar títulos ou endereços"
+  },
+  "privacy": {
+    "message": "Somente no seu dispositivo. Sem análises, contas ou solicitações externas."
+  },
+  "empty": {
+    "message": "Nenhuma aba fechada recentemente."
+  },
+  "noResults": {
+    "message": "Nenhuma aba encontrada."
+  },
+  "windowTabs": {
+    "message": "Janela fechada · $1 abas"
+  },
+  "untitled": {
+    "message": "Aba sem título"
+  },
+  "stale": {
+    "message": "Esta aba não está mais disponível. Atualize a lista."
+  },
+  "loadError": {
+    "message": "Não foi possível carregar as abas. Tente novamente."
+  }
+}

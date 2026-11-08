@@ -1,0 +1,50 @@
+{
+  "description": {
+    "message": "按一下還原已關閉的分頁，瀏覽與搜尋最近關閉的分頁記錄。"
+  },
+  "actionTitle": {
+    "message": "還原剛關閉的分頁 · 按右鍵查看記錄"
+  },
+  "reopen": {
+    "message": "還原剛關閉的分頁"
+  },
+  "history": {
+    "message": "已關閉的分頁"
+  },
+  "intro": {
+    "message": "找回那些不小心關閉的頁面。"
+  },
+  "pressHint": {
+    "message": "按一下還原 · 長按顯示記錄 · Esc 收合清單"
+  },
+  "safariNotice": {
+    "message": "Safari 安裝後僅在本機記錄最多 100 個已關閉的網頁分頁。重新開啟只能還原網址，無法還原頁面狀態或上一頁／下一頁記錄。不記錄私密和瀏覽器內部分頁。"
+  },
+  "recent": {
+    "message": "最近關閉"
+  },
+  "search": {
+    "message": "搜尋標題或網址"
+  },
+  "privacy": {
+    "message": "資料僅儲存在本機。無追蹤、無帳號、無對外請求。"
+  },
+  "empty": {
+    "message": "沒有最近關閉的分頁。"
+  },
+  "noResults": {
+    "message": "沒有符合的分頁。"
+  },
+  "windowTabs": {
+    "message": "已關閉的視窗 · $1 個分頁"
+  },
+  "untitled": {
+    "message": "無標題分頁"
+  },
+  "stale": {
+    "message": "此分頁已無法使用，請重新整理清單。"
+  },
+  "loadError": {
+    "message": "無法載入關閉記錄，請再試一次。"
+  }
+}
