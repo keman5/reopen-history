@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "Verlauf geschlossener Tabs"
+  },
+  "minFontSize": {
+    "message": "Mindestschriftgröße"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Alle offenen Verlaufs- und Einstellungsseiten werden sofort aktualisiert."
+  },
+  "settingsIntro": {
+    "message": "Textgröße und Wiederherstellung anpassen. Änderungen werden automatisch gespeichert."
+  },
+  "displaySettings": {
+    "message": "Anzeige"
+  },
+  "behaviorSettings": {
+    "message": "Aktionen"
+  },
+  "recoverySettings": {
+    "message": "Wiederherstellbare Seiten"
+  },
+  "fontPreview": {
+    "message": "Eine kürzlich geschlossene Seite öffnen"
+  },
+  "settingsAutoSave": {
+    "message": "Änderungen werden automatisch gespeichert"
+  },
+  "language": {
+    "message": "Anzeigesprache"
+  },
+  "automaticLanguage": {
+    "message": "Browsersprache verwenden"
+  },
+  "privacyPolicy": {
+    "message": "Datenschutzerklärung"
+  },
+  "support": {
+    "message": "Hilfe"
   }
 }

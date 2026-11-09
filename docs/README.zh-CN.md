@@ -1,13 +1,33 @@
 # Reopen History
 
+<img src="../extension/icons/icon128.png" alt="恢复已关闭标签应用图标" width="96" height="96">
+
+**当前版本：1.0.0**
+
 轻量的关闭标签页恢复扩展，支持 Chrome、Edge、Firefox，以及通过本地记录实现兼容的 macOS Safari。独立实现，不包含参考插件的源码、图标或品牌。
+
+[English](../README.md) · [隐私说明](../PRIVACY.md) · [四个平台上架指南](STORE-PUBLISHING.zh-CN.md)
+
+## 实际截图
+
+以下为扩展简体中文界面的实际运行截图。
+
+**关闭历史**：搜索标题或网址，查看站点图标，一键重新打开已关闭标签页。
+
+![关闭历史页面，包含搜索框、站点图标和重新打开按钮](../assets/screenshots/history.png)
+
+**扩展选项**：切换界面语言、调整最小字号，开启或关闭网页右键菜单。
+
+![扩展选项页面，包含最小字号滑轨和右键菜单开关](../assets/screenshots/settings.png)
 
 ## 操作
 
 - 固定工具栏按钮后，**单击直接恢复最近关闭的标签页或窗口**。
-- **右键工具栏按钮 → 关闭历史**：直接在普通标签页打开 `history.html`，不使用悬浮面板或独立弹窗。浏览器拥有原生右键菜单，因此需要选择菜单项，无法直接替换整个右键菜单。扩展选项可额外开启网页右键菜单，默认关闭。
+- **右键工具栏按钮 → 关闭历史**：在普通标签页打开 `history.html`，不额外添加工具栏恢复菜单项。顶部原生扩展名称项由浏览器控制；扩展不指定主页覆盖，让商店安装版本使用对应商店入口。本地加载版本可能显示为灰色。扩展选项可额外开启网页恢复／历史菜单，默认关闭。
 - 历史页面中的橙色按钮：**单击恢复、长按 500 毫秒显示列表**；Esc 收起列表，保留历史页面。支持 Tab、Enter、空格，不主动抢焦点。
 - 快捷键：`Alt+Shift+T` 恢复；`Ctrl+Shift+Y` 打开历史，macOS 为 `⌘+Shift+Y`。若冲突，请在浏览器的扩展快捷键设置中修改。
+- 字号：设置页提供 **13–20px 最小字体滑轨**，拖动时实时更新所有已打开的历史页和设置页，并在本地保存；原本更大的标题保留字号。
+- 语言：扩展选项可选择“跟随浏览器”或手动指定现有 12 种语言，偏好仅在本地保存。历史页、设置页、时间、工具栏提示及右键菜单即时切换；阿拉伯语自动使用从右到左布局。扩展管理页的名称和浏览器快捷键列表仍由浏览器语言决定。
 
 浏览器扩展标准不提供原生工具栏按钮的按下／松开事件，因此无法跨浏览器可靠识别工具栏长按。本项目按确认的选择保留工具栏单击恢复，长按放在扩展页面内，并提供选项页、快捷键及工具栏右键菜单历史入口。
 
@@ -31,26 +51,28 @@ Safari 不记录隐私标签页和浏览器内部页面，不提供启用前的�
 
 ```sh
 npm ci
-bash build.sh
+bash build.sh --version 1.0.0
 ```
 
 所有构建产物固定输出到 `~/downloads/dist`，仅覆盖本项目同版本产物，保留其他项目文件。
 
-Chrome / Edge 在扩展管理页启用开发者模式，选择「加载解压缩的扩展」，载入 `~/downloads/dist/reopen-history-chromium-v1.0.1`。
+指定 `--version 1.0.0` 可重新构建当前正式版；不传 `--version` 时，脚本会自动递增补丁版本号。
 
-Firefox 在 `about:debugging#/runtime/this-firefox` 点击「临时载入附加组件」，选择 `~/downloads/dist/reopen-history-firefox-v1.0.1/manifest.json`。
+Chrome / Edge 在扩展管理页启用开发者模式，选择「加载解压缩的扩展」，载入 `~/downloads/dist/reopen-history-chromium-v1.0.0`。
+
+Firefox 在 `about:debugging#/runtime/this-firefox` 点击「临时载入附加组件」，选择 `~/downloads/dist/reopen-history-firefox-v1.0.0/manifest.json`。
 
 Safari：
 
 ```sh
-bash build.sh --safari
+bash build.sh --version 1.0.0 --safari
 ```
 
 生成 Xcode 工程并本地编译 macOS 宿主应用，位于 `~/downloads/dist/Reopen History.app`。默认构建使用临时签名，未做分发签名，开发安装可能需要在 Safari 开发者设置允许未签名扩展；正式分发需要 Apple 开发者签名等步骤。可通过 `SAFARI_SIGN_IDENTITY` 和 `SAFARI_TEAM` 指定自己的签名，追加 `--install` 会替换 `/Applications/Reopen History.app`。构建完成后清理临时 Xcode 缓存。脚本不会自动修改浏览器安全设置、启用扩展，也不会提交商店。
 
 所有测试均在后台执行。`npm run test:browser` 使用独立临时配置启动无头 Edge，不影响当前浏览器。各项实际验证边界见 [VERIFICATION.md](VERIFICATION.md)。
 
-支持 12 种完整界面语言，随浏览器语言自动选择。数据仅保存在本机，无账号、无统计、无远程图标请求；打开网页本身仍会访问对应网站。详见 [隐私说明](../PRIVACY.md)。
+支持 12 种完整界面语言，默认跟随浏览器，也可在扩展选项中手动切换。数据仅保存在本机，无账号、无统计、无远程图标请求；打开网页本身仍会访问对应网站。详见 [隐私说明](../PRIVACY.md)。
 
 
 ## 历史记录图标

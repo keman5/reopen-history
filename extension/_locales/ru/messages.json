@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "История закрытых вкладок"
+  },
+  "minFontSize": {
+    "message": "Минимальный размер шрифта"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Сразу применяется ко всем открытым страницам истории и настроек."
+  },
+  "settingsIntro": {
+    "message": "Настройте размер текста и восстановление. Изменения сохраняются автоматически."
+  },
+  "displaySettings": {
+    "message": "Отображение"
+  },
+  "behaviorSettings": {
+    "message": "Действия"
+  },
+  "recoverySettings": {
+    "message": "Восстанавливаемые страницы"
+  },
+  "fontPreview": {
+    "message": "Открыть недавно закрытую страницу"
+  },
+  "settingsAutoSave": {
+    "message": "Изменения сохраняются автоматически"
+  },
+  "language": {
+    "message": "Язык интерфейса"
+  },
+  "automaticLanguage": {
+    "message": "Как в браузере"
+  },
+  "privacyPolicy": {
+    "message": "Политика конфиденциальности"
+  },
+  "support": {
+    "message": "Поддержка"
   }
 }

@@ -68,7 +68,7 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
       footer: document.querySelector('.footer').getBoundingClientRect().height
     }));
     assert.ok(chromeHeights.header <= 44);
-    assert.ok(chromeHeights.footer <= 32);
+    assert.ok(chromeHeights.footer <= 34);
     console.log('PASS: compact header/footer, no button hint or numeric badge, existing icon128 used');
 
 
@@ -84,10 +84,62 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
     await options.waitForFunction(() => document.title.endsWith(' · ' + api.i18n.getMessage('appName')));
     assert.equal(await options.locator('.brand span').textContent(), appName);
 
+    const language = options.locator('#language');
+    assert.equal(await language.count(), 1, 'Settings must offer a language selector');
+    assert.equal(await language.locator('option').count(), 13);
+    assert.equal(await language.inputValue(), 'auto');
+    const english = require('../extension/_locales/en/messages.json');
+    const japanese = require('../extension/_locales/ja/messages.json');
+    await language.focus();
+    await language.selectOption('en');
+    await options.waitForFunction(() => document.querySelector('h1').textContent === 'Settings');
+    await history.waitForFunction(() => document.querySelector('.brand span').textContent === 'Reopen History');
+    assert.equal(await history.locator('#search').getAttribute('placeholder'), english.search.message);
+    await history.waitForFunction(async expected => await api.action.getTitle({}) === expected, english.actionTitle.message);
+    assert.equal(await worker.evaluate(() => api.action.getTitle({})), english.actionTitle.message);
+    assert.equal(await options.evaluate(() => document.activeElement.id), 'language', 'Changing language keeps keyboard focus');
+    if (process.env.TEST_LANGUAGE_SCREENSHOT_DIR) {
+      fs.mkdirSync(process.env.TEST_LANGUAGE_SCREENSHOT_DIR, { recursive: true });
+      await options.screenshot({ path: path.join(process.env.TEST_LANGUAGE_SCREENSHOT_DIR, 'settings-language-english.png'), fullPage: true });
+    }
+    await options.reload();
+    await options.waitForFunction(() => !document.querySelector('#language').disabled);
+    assert.equal(await language.inputValue(), 'en', 'Language survives reload');
+    await language.selectOption('ja');
+    await history.waitForFunction(() => document.documentElement.lang === 'ja');
+    assert.equal(await history.locator('#search').getAttribute('placeholder'), japanese.search.message);
+    assert.equal(await history.locator('.time').first().evaluate(time => time.title === new Date(time.dateTime).toLocaleString('ja')), true);
+    await language.selectOption('ar');
+    for (const page of [history, options]) {
+      await page.waitForFunction(() => document.documentElement.dir === 'rtl');
+      assert.equal(await page.locator('html').getAttribute('lang'), 'ar');
+      await page.setViewportSize({ width: 390, height: 760 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'RTL fits a narrow viewport');
+    }
+    if (process.env.TEST_LANGUAGE_SCREENSHOT_DIR) {
+      await options.screenshot({ path: path.join(process.env.TEST_LANGUAGE_SCREENSHOT_DIR, 'settings-language-arabic.png'), fullPage: true });
+    }
+    await language.selectOption('auto');
+    await history.waitForFunction(name => document.querySelector('.brand span').textContent === name, appName);
+    const browserDirection = await options.evaluate(() => /^ar(?:-|_|$)/i.test(api.i18n.getUILanguage()) ? 'rtl' : 'ltr');
+    await options.waitForFunction(dir => document.documentElement.dir === dir && document.querySelector('#language').value === 'auto', browserDirection);
+    await options.setViewportSize({ width: 1280, height: 720 });
+    await history.setViewportSize({ width: 1280, height: 720 });
+    console.log('PASS: automatic and manual language selection, persistence, live history/date/action localization, focus and RTL');
+
     const menu = options.locator('#context-menu');
     await menu.waitFor();
     await menu.isEnabled();
     assert.equal(await menu.isChecked(), false);
+    await options.locator('[data-i18n="showContextMenu"]').click();
+    assert.equal(await menu.isChecked(), false, 'Clicking the setting text must not toggle the switch');
+    const setting = options.locator('.setting');
+    const settingBounds = await setting.boundingBox();
+    await setting.click({ position: { x: settingBounds.width / 2, y: 2 } });
+    assert.equal(await menu.isChecked(), false, 'Clicking row whitespace must not toggle the switch');
+    assert.equal(await options.getByRole('switch', {
+      name: await options.evaluate(() => api.i18n.getMessage('showContextMenu'))
+    }).count(), 1, 'The switch retains its accessible name');
     await menu.check();
     await options.reload();
     await options.waitForFunction(() => !document.querySelector('#context-menu').disabled);
@@ -96,6 +148,90 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
     await options.reload();
     await options.waitForFunction(() => !document.querySelector('#context-menu').disabled);
     assert.equal(await menu.isChecked(), false);
+    await menu.focus();
+    await options.keyboard.press('Space');
+    assert.equal(await menu.isChecked(), true, 'Keyboard Space toggles the focused switch');
+    await options.waitForFunction(() => !document.querySelector('#context-menu').disabled);
+    await options.keyboard.press('Space');
+    assert.equal(await menu.isChecked(), false);
+    await options.waitForFunction(() => !document.querySelector('#context-menu').disabled);
+    console.log('PASS: only the switch toggles the context-menu preference; text and row clicks do not; accessible name and keyboard control retained');
+
+    const minimumTextSize = page => page.evaluate(() => {
+      const sizes = [];
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (node.textContent.trim() && node.parentElement.getClientRects().length &&
+            !['SCRIPT', 'STYLE'].includes(node.parentElement.tagName)) {
+          sizes.push(parseFloat(getComputedStyle(node.parentElement).fontSize));
+        }
+      }
+      sizes.push(parseFloat(getComputedStyle(document.querySelector('input')).fontSize));
+      return Math.min(...sizes);
+    });
+    assert.ok(await minimumTextSize(history) >= 13, 'History defaults to at least 13px');
+    assert.ok(await minimumTextSize(options) >= 13, 'Settings default to at least 13px');
+    const slider = options.locator('#min-font-size');
+    assert.equal(await slider.getAttribute('min'), '13');
+    assert.equal(await slider.getAttribute('max'), '20');
+    assert.equal(await slider.inputValue(), '13');
+    const otherOptions = await context.newPage();
+    await otherOptions.goto(`chrome-extension://${id}/options.html`);
+    await otherOptions.waitForFunction(() => !document.querySelector('#min-font-size')?.disabled);
+    await slider.evaluate(input => {
+      input.value = '20';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      if (getComputedStyle(document.querySelector('.font-setting>label')).fontSize !== '20px') {
+        throw new Error('Slider must update the current page in the input event');
+      }
+    });
+    for (const page of [history, otherOptions]) {
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.brand')).fontSize === '20px');
+      assert.ok(await minimumTextSize(page) >= 20);
+    }
+    assert.ok(await minimumTextSize(options) >= 20);
+    assert.equal(await otherOptions.locator('#min-font-size').inputValue(), '20');
+    for (const page of [history, options]) {
+      await page.setViewportSize({ width: 390, height: 760 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), '20px fits a narrow viewport');
+    }
+    if (process.env.TEST_FONT_SCREENSHOT_DIR) {
+      fs.mkdirSync(process.env.TEST_FONT_SCREENSHOT_DIR, { recursive: true });
+      await options.screenshot({ path: path.join(process.env.TEST_FONT_SCREENSHOT_DIR, 'font-settings-20px.png'), fullPage: true });
+      await history.screenshot({ path: path.join(process.env.TEST_FONT_SCREENSHOT_DIR, 'font-history-20px.png'), fullPage: true });
+    }
+    await options.reload();
+    await options.waitForFunction(() => document.querySelector('#min-font-size')?.value === '20');
+    assert.ok(await minimumTextSize(options) >= 20, 'Font preference survives reload');
+    await slider.evaluate(input => {
+      for (const value of ['14', '20', '18', '19', '13']) {
+        input.value = value;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+    for (const page of [history, otherOptions]) {
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.brand')).fontSize === '14px');
+    }
+    await options.reload();
+    await options.waitForFunction(() => document.querySelector('#min-font-size')?.value === '13');
+    for (const [value, expected] of [[100, 20], [-5, 13], [18.4, 18], ['invalid', 13]]) {
+      await worker.evaluate(value => api.storage.local.set({ minFontSize: value }), value);
+      await options.waitForFunction(size => document.querySelector('#min-font-size').value === String(size), expected);
+      await history.waitForFunction(size => getComputedStyle(document.documentElement).getPropertyValue('--min-font-size').trim() === `${size}px`, expected);
+    }
+    await worker.evaluate(() => api.storage.local.remove('minFontSize'));
+    await options.waitForFunction(() => !document.querySelector('#min-font-size').disabled);
+    await slider.press('End');
+    await history.waitForFunction(() => getComputedStyle(document.querySelector('.brand')).fontSize === '20px');
+    await slider.press('Home');
+    await history.waitForFunction(() => getComputedStyle(document.querySelector('.brand')).fontSize === '14px');
+    await otherOptions.close();
+    for (const page of [history, options]) await page.setViewportSize({ width: 1280, height: 720 });
+    if (process.env.TEST_FONT_SCREENSHOT_DIR) {
+      await options.screenshot({ path: path.join(process.env.TEST_FONT_SCREENSHOT_DIR, 'font-settings-13px.png'), fullPage: true });
+    }
+    console.log('PASS: 13–20px minimum font, live cross-page input updates, narrow layout, rapid changes, persistence, bounds and keyboard');
     await options.close();
     const blank = await context.newPage();
     await blank.close();

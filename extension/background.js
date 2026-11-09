@@ -1,8 +1,8 @@
-if (typeof importScripts === 'function') importScripts('core.js');
+if (typeof importScripts === 'function') importScripts('core.js', 'i18n.js');
 const api = globalThis.browser || globalThis.chrome;
 const { isRestorable, sessionsToEntries, cachedIcon } = ReopenCore;
 const nativeSessions = Boolean(api.sessions?.getRecentlyClosed);
-const t = (key, substitutions) => api.i18n.getMessage(key, substitutions);
+const t = ReopenI18n.t;
 const HISTORY_LIMIT = 1000;
 let queue = Promise.resolve();
 let liveTabs = {};
@@ -70,11 +70,14 @@ api.contextMenus.onClicked.addListener(info => {
   if (info.menuItemId === 'reopen') serial(() => restore()).catch(report);
 });
 async function updateMenus() {
+  await ReopenI18n.ready;
   await api.contextMenus.removeAll();
   const { showContextMenu } = await api.storage.local.get('showContextMenu');
   if (showContextMenu === true) api.contextMenus.create({ id: 'reopen', title: t('reopenAction'), contexts: ['page'] });
   api.contextMenus.create({ id: 'history', title: t('menuHistory'), contexts: showContextMenu === true ? ['action', 'page'] : ['action'] });
+  await api.action.setTitle({ title: t('actionTitle') });
 }
+ReopenI18n.subscribe(() => { serial(updateMenus); });
 api.runtime.onInstalled.addListener(() => { serial(updateMenus); });
 api.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && Object.hasOwn(changes, 'showContextMenu')) serial(updateMenus);

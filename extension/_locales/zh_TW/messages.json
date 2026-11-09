@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "關閉歷史"
+  },
+  "minFontSize": {
+    "message": "最小字體"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px，即時更新所有已開啟的歷史頁與設定頁。"
+  },
+  "settingsIntro": {
+    "message": "調整字體大小與還原入口，變更後自動儲存。"
+  },
+  "displaySettings": {
+    "message": "顯示"
+  },
+  "behaviorSettings": {
+    "message": "操作"
+  },
+  "recoverySettings": {
+    "message": "還原範圍"
+  },
+  "fontPreview": {
+    "message": "找回剛剛關閉的網頁"
+  },
+  "settingsAutoSave": {
+    "message": "變更後自動儲存"
+  },
+  "language": {
+    "message": "介面語言"
+  },
+  "automaticLanguage": {
+    "message": "跟隨瀏覽器"
+  },
+  "privacyPolicy": {
+    "message": "隱私權政策"
+  },
+  "support": {
+    "message": "支援與說明"
   }
 }

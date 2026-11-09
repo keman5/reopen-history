@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "閉じたタブの履歴"
+  },
+  "minFontSize": {
+    "message": "最小文字サイズ"
+  },
+  "minFontSizeHelp": {
+    "message": "13～20px。開いている履歴と設定ページにすぐに反映されます。"
+  },
+  "settingsIntro": {
+    "message": "文字サイズと復元操作を調整します。変更は自動保存されます。"
+  },
+  "displaySettings": {
+    "message": "表示"
+  },
+  "behaviorSettings": {
+    "message": "操作"
+  },
+  "recoverySettings": {
+    "message": "復元の対象"
+  },
+  "fontPreview": {
+    "message": "最近閉じたページを開く"
+  },
+  "settingsAutoSave": {
+    "message": "変更は自動保存されます"
+  },
+  "language": {
+    "message": "表示言語"
+  },
+  "automaticLanguage": {
+    "message": "ブラウザーに合わせる"
+  },
+  "privacyPolicy": {
+    "message": "プライバシーポリシー"
+  },
+  "support": {
+    "message": "サポート"
   }
 }

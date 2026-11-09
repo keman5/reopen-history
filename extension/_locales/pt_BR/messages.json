@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "Histórico de abas fechadas"
+  },
+  "minFontSize": {
+    "message": "Tamanho mínimo da fonte"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Atualiza imediatamente todas as páginas abertas de histórico e configurações."
+  },
+  "settingsIntro": {
+    "message": "Ajuste o texto e os controles de restauração. As alterações são salvas automaticamente."
+  },
+  "displaySettings": {
+    "message": "Exibição"
+  },
+  "behaviorSettings": {
+    "message": "Ações"
+  },
+  "recoverySettings": {
+    "message": "Páginas restauráveis"
+  },
+  "fontPreview": {
+    "message": "Reabrir uma página fechada recentemente"
+  },
+  "settingsAutoSave": {
+    "message": "As alterações são salvas automaticamente"
+  },
+  "language": {
+    "message": "Idioma da interface"
+  },
+  "automaticLanguage": {
+    "message": "Seguir o navegador"
+  },
+  "privacyPolicy": {
+    "message": "Política de privacidade"
+  },
+  "support": {
+    "message": "Suporte"
   }
 }

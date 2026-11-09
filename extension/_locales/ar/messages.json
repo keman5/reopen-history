@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "سجل علامات التبويب المغلقة"
+  },
+  "minFontSize": {
+    "message": "الحد الأدنى لحجم الخط"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. يُطبّق فورًا على جميع صفحات السجل والإعدادات المفتوحة."
+  },
+  "settingsIntro": {
+    "message": "اضبط حجم النص وعناصر التحكم في الاستعادة. تُحفظ التغييرات تلقائيًا."
+  },
+  "displaySettings": {
+    "message": "العرض"
+  },
+  "behaviorSettings": {
+    "message": "الإجراءات"
+  },
+  "recoverySettings": {
+    "message": "نطاق الاستعادة"
+  },
+  "fontPreview": {
+    "message": "إعادة فتح صفحة أُغلقت مؤخرًا"
+  },
+  "settingsAutoSave": {
+    "message": "تُحفظ التغييرات تلقائيًا"
+  },
+  "language": {
+    "message": "لغة الواجهة"
+  },
+  "automaticLanguage": {
+    "message": "اتباع لغة المتصفح"
+  },
+  "privacyPolicy": {
+    "message": "سياسة الخصوصية"
+  },
+  "support": {
+    "message": "الدعم"
   }
 }

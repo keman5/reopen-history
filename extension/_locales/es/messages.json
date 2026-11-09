@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "Historial de pestañas cerradas"
+  },
+  "minFontSize": {
+    "message": "Tamaño mínimo de letra"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Actualiza al instante todas las páginas abiertas de historial y ajustes."
+  },
+  "settingsIntro": {
+    "message": "Ajusta el texto y los controles de restauración. Los cambios se guardan automáticamente."
+  },
+  "displaySettings": {
+    "message": "Pantalla"
+  },
+  "behaviorSettings": {
+    "message": "Acciones"
+  },
+  "recoverySettings": {
+    "message": "Páginas recuperables"
+  },
+  "fontPreview": {
+    "message": "Reabrir una página cerrada recientemente"
+  },
+  "settingsAutoSave": {
+    "message": "Los cambios se guardan automáticamente"
+  },
+  "language": {
+    "message": "Idioma de la interfaz"
+  },
+  "automaticLanguage": {
+    "message": "Usar el idioma del navegador"
+  },
+  "privacyPolicy": {
+    "message": "Política de privacidad"
+  },
+  "support": {
+    "message": "Ayuda"
   }
 }

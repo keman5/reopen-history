@@ -1,15 +1,36 @@
 # Reopen History
 
+<img src="extension/icons/icon128.png" alt="Reopen History app icon" width="96" height="96">
+
+**Current version: 1.0.0**
+
 A small, local-only browser extension for recovering closed tabs. Built independently, with the one-click behavior of [Reopen closed tab Button™](https://microsoftedge.microsoft.com/addons/detail/reopen-closed-tab-button%E2%84%A2/ffikmgfojmfconjpbcflembkiclgfgeo) as a reference; no original code, assets or branding are included.
 
-[简体中文说明](docs/README.zh-CN.md) · [Privacy](PRIVACY.md) · [Verification and limitations](docs/VERIFICATION.md)
+[简体中文说明](docs/README.zh-CN.md) · [Privacy](PRIVACY.md) · [Support](SUPPORT.md) · [Verification and limitations](docs/VERIFICATION.md)
+
+Privacy and support pages are bundled for offline reading and generated for static hosting in docs/. See [store listing materials](docs/STORE-LISTING.md) for public URL setup and ready-to-use descriptions.
+
+For the 1.0.0 release, see the [four-store publishing guide](docs/STORE-PUBLISHING.zh-CN.md). It includes upload file mappings, reviewer instructions, privacy/permission explanations and the local Safari App Store archive/export workflow.
+
+## Screenshots
+
+Actual screenshots of the extension running in Simplified Chinese.
+
+**Closed-tab history** — search titles and URLs, view site icons and reopen a closed tab.
+
+![Closed-tab history with search, site icons and the reopen action](assets/screenshots/history.png)
+
+**Settings** — choose the interface language, adjust the minimum font size and toggle webpage context menus.
+
+![Extension settings with the font-size slider and context-menu toggle](assets/screenshots/settings.png)
 
 ## Usage
 
 - **Click the pinned toolbar button:** reopen the most recently closed tab or window.
-- **Right-click the toolbar button → Closed tabs:** open `history.html` directly in a normal browser tab. Browsers own the native right-click menu, so selecting this item is required. Extension options can additionally enable webpage menus (off by default).
+- **Right-click the toolbar button → Closed tabs:** open `history.html` in a normal browser tab. No extra toolbar recovery item is added. The native extension-name item is controlled by the browser; no homepage override is set, allowing store installations to use the store listing. It may be disabled for locally loaded builds. Extension options can additionally enable webpage recovery/history menus (off by default).
 - **Inside the history page:** click the orange button to reopen the latest entry; hold it for 500 ms to reveal the list. Escape hides the history list without closing the tab. Standard Tab, Enter and Space navigation is supported, without automatically focusing controls.
 - **Keyboard:** `Alt+Shift+T` reopens the latest entry; `Ctrl+Shift+Y` opens history (`⌘+Shift+Y` on macOS). Browser or OS shortcuts may take precedence; change bindings in your browser's extension shortcuts settings.
+- **Text size:** Settings includes a 13–20px minimum font-size slider. Changes apply immediately to all open history and settings pages and are saved locally; larger headings retain their size.
 
 **Toolbar long press:** standard WebExtensions toolbar actions expose click events, not pointer-down/up events. A portable extension cannot distinguish a short click from a long hold on the native toolbar. The toolbar therefore keeps immediate one-click recovery; long press is implemented on the extension's own button. This tradeoff was explicitly selected for this project.
 
@@ -17,9 +38,9 @@ A small, local-only browser extension for recovering closed tabs. Built independ
 
 | Browser | Package | Recovery |
 | --- | --- | --- |
-| Chrome 120+, Edge 120+, Brave, Opera, Vivaldi | `~/downloads/dist/reopen-history-chromium-v1.0.1` | Native `sessions` restore, including browser-provided tab state |
-| Firefox 142+ desktop | `~/downloads/dist/reopen-history-firefox-v1.0.1` | Native `sessions` restore |
-| Safari 16+ on macOS 13+ | `~/downloads/dist/reopen-history-safari-v1.0.1` + generated macOS host app | Local URL recovery; see limitations below |
+| Chrome 120+, Edge 120+, Brave, Opera, Vivaldi | `~/downloads/dist/reopen-history-chromium-v1.0.0` | Native `sessions` restore, including browser-provided tab state |
+| Firefox 142+ desktop | `~/downloads/dist/reopen-history-firefox-v1.0.0` | Native `sessions` restore |
+| Safari 16+ on macOS 13+ | `~/downloads/dist/reopen-history-safari-v1.0.0` + generated macOS host app | Local URL recovery; see limitations below |
 
 The history page uses one searchable list, marks the newest entry with a badge, and shows **100 entries per page**. All browsers retain up to **1,000 eligible entries locally**. Chrome/Edge/Firefox initially import at most 25 browser-provided sessions and accumulate additional closures while active; unavailable older sessions cannot be backfilled. Available sessions use native recovery; expired archived entries reopen their saved URL only (a window entry falls back to its first tab). Safari uses URL recovery throughout.
 
@@ -33,26 +54,28 @@ Requirements: Node.js 22+, `zip`, installed Microsoft Edge (headless icon render
 
 ```sh
 npm ci
-bash build.sh
+bash build.sh --version 1.0.0
 ```
 
 The script runs the core tests, validates every locale and produces unpacked builds plus ZIP files for all three targets. All output is written to `~/downloads/dist`. It replaces only this project's matching versioned output, preserves other projects' downloads, and clears this project's `.artifacts` and old local `dist` output; when Go is installed it also clears Go build/test caches as required by the workspace instructions.
 
-**Chrome/Edge:** open `chrome://extensions` or `edge://extensions`, enable Developer mode, choose **Load unpacked**, and select `~/downloads/dist/reopen-history-chromium-v1.0.1` (expand `~` to your home directory). Pin the toolbar button. Other Chromium browsers use their corresponding extensions page.
+The explicit version reproduces the 1.0.0 release. Omit `--version` to automatically increment the patch version for a new build.
 
-**Firefox:** open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, then select `~/downloads/dist/reopen-history-firefox-v1.0.1/manifest.json` (removed on browser restart). Permanent installation requires Mozilla signing; a ZIP is not a signed XPI.
+**Chrome/Edge:** open `chrome://extensions` or `edge://extensions`, enable Developer mode, choose **Load unpacked**, and select `~/downloads/dist/reopen-history-chromium-v1.0.0` (expand `~` to your home directory). Pin the toolbar button. Other Chromium browsers use their corresponding extensions page.
+
+**Firefox:** open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, then select `~/downloads/dist/reopen-history-firefox-v1.0.0/manifest.json` (removed on browser restart). Permanent installation requires Mozilla signing; a ZIP is not a signed XPI.
 
 **Safari:**
 
 ```sh
-bash build.sh --safari
+bash build.sh --version 1.0.0 --safari
 ```
 
 This generates a macOS Swift host using Apple's converter and compiles it locally with an ad-hoc signature by default. The app is placed in `~/downloads/dist/Reopen History.app`; temporary Xcode build caches are removed after packaging. For personal development, Safari may require Developer settings → Allow unsigned extensions. To sign with your own certificate and install/replace the local host app:
 
 ```sh
 SAFARI_SIGN_IDENTITY='Developer ID Application: Your Name (TEAMID)' \
-SAFARI_TEAM=TEAMID bash build.sh --safari --install
+SAFARI_TEAM=TEAMID bash build.sh --version 1.0.0 --safari --install
 ```
 
 The install option replaces `/Applications/Reopen History.app` after the new build passes signature verification; it does not enable the browser extension. Safari still requires explicit user activation. For normal distribution, sign the host and extension with your Apple Developer credentials and follow Apple's Safari distribution requirements. This project does not automatically change browser security settings or publish to any extension store.
@@ -74,7 +97,7 @@ History rows use a stable color and the registrable domain’s initial (for exam
 
 ## Languages
 
-English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), Italiano, Русский, العربية. The browser selects the language automatically, falls back to English, and uses right-to-left layout for Arabic. Every packaged locale must have the same complete set of keys.
+English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), Italiano, Русский, العربية. Settings offers **Follow browser** (the default) or a manual language selection, saved locally. Changes update all open history/settings pages, relative dates, toolbar tooltips and context menus immediately. Arabic uses right-to-left layout; missing translations fall back to English. The name and command descriptions in the browser's extension-management UI remain controlled by the browser language. Every packaged locale must have the same complete set of keys.
 
 ## Permissions
 

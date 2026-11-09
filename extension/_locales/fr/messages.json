@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "Historique des onglets fermés"
+  },
+  "minFontSize": {
+    "message": "Taille minimale du texte"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Mise à jour immédiate de toutes les pages d’historique et de paramètres ouvertes."
+  },
+  "settingsIntro": {
+    "message": "Réglez le texte et les commandes de restauration. Les modifications sont enregistrées automatiquement."
+  },
+  "displaySettings": {
+    "message": "Affichage"
+  },
+  "behaviorSettings": {
+    "message": "Actions"
+  },
+  "recoverySettings": {
+    "message": "Pages restaurables"
+  },
+  "fontPreview": {
+    "message": "Rouvrir une page récemment fermée"
+  },
+  "settingsAutoSave": {
+    "message": "Enregistrement automatique des modifications"
+  },
+  "language": {
+    "message": "Langue de l’interface"
+  },
+  "automaticLanguage": {
+    "message": "Suivre le navigateur"
+  },
+  "privacyPolicy": {
+    "message": "Politique de confidentialité"
+  },
+  "support": {
+    "message": "Assistance"
   }
 }

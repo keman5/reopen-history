@@ -1,18 +1,5 @@
 const api = globalThis.browser || globalThis.chrome;
-const t = (key, substitutions) => api.i18n.getMessage(key, substitutions);
-document.documentElement.lang = api.i18n.getUILanguage();
-document.documentElement.dir = /^(ar|he|fa|ur)(-|$)/.test(document.documentElement.lang) ? 'rtl' : 'ltr';
-for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n);
-document.title = t('history') + ' · ' + t('appName');
-for (const node of document.querySelectorAll('[data-i18n-placeholder]')) {
-  node.placeholder = t(node.dataset.i18nPlaceholder);
-  node.setAttribute('aria-label', node.placeholder);
-}
-for (const node of document.querySelectorAll('[data-i18n-label]')) {
-  node.setAttribute('aria-label', t(node.dataset.i18nLabel));
-  node.title = t(node.dataset.i18nLabel);
-}
-for (const node of document.querySelectorAll('[data-i18n-title]')) node.title = t(node.dataset.i18nTitle);
+const t = ReopenI18n.t;
 if (!navigator.platform.includes('Mac')) document.querySelector('kbd').textContent = 'Alt ⇧ T';
 const list = document.querySelector('#list');
 const status = document.querySelector('#status');
@@ -103,8 +90,8 @@ function render() {
       const seconds = Math.max(0, Math.round((Date.now() - entry.closedAt) / 1000));
       const unit = seconds < 60 ? 'second' : seconds < 3600 ? 'minute' : seconds < 86400 ? 'hour' : 'day';
       const value = Math.floor(seconds / ({ second: 1, minute: 60, hour: 3600, day: 86400 }[unit]));
-      time.textContent = new Intl.RelativeTimeFormat(api.i18n.getUILanguage(), { numeric: 'auto', style: 'short' }).format(-value, unit);
-      time.title = date.toLocaleString(api.i18n.getUILanguage());
+      time.textContent = new Intl.RelativeTimeFormat(ReopenI18n.locale, { numeric: 'auto', style: 'short' }).format(-value, unit);
+      time.title = date.toLocaleString(ReopenI18n.locale);
     }
     if (entry === latest) {
       const badge = document.createElement('span');
@@ -163,6 +150,16 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape') { history.hidden = true; reopen.setAttribute('aria-expanded', 'false'); }
 });
 api.sessions?.onChanged.addListener(load);
-api.storage.onChanged.addListener((_changes, area) => { if (area === 'local') load(); });
+api.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && Object.hasOwn(changes, 'closedTabs')) load();
+});
 window.addEventListener('focus', load);
-load();
+function localize() {
+  ReopenI18n.localizeDocument('history');
+  render();
+}
+ReopenI18n.subscribe(localize);
+ReopenI18n.ready.then(() => {
+  localize();
+  load();
+});

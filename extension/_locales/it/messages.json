@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "Cronologia delle schede chiuse"
+  },
+  "minFontSize": {
+    "message": "Dimensione minima del testo"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Aggiorna subito tutte le pagine aperte della cronologia e delle impostazioni."
+  },
+  "settingsIntro": {
+    "message": "Regola il testo e i comandi di ripristino. Le modifiche vengono salvate automaticamente."
+  },
+  "displaySettings": {
+    "message": "Aspetto"
+  },
+  "behaviorSettings": {
+    "message": "Azioni"
+  },
+  "recoverySettings": {
+    "message": "Pagine ripristinabili"
+  },
+  "fontPreview": {
+    "message": "Riapri una pagina chiusa di recente"
+  },
+  "settingsAutoSave": {
+    "message": "Le modifiche vengono salvate automaticamente"
+  },
+  "language": {
+    "message": "Lingua dell’interfaccia"
+  },
+  "automaticLanguage": {
+    "message": "Segui il browser"
+  },
+  "privacyPolicy": {
+    "message": "Informativa sulla privacy"
+  },
+  "support": {
+    "message": "Assistenza"
   }
 }

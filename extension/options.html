@@ -8,24 +8,38 @@
   <link rel="icon" href="icons/icon32.png">
   <link rel="stylesheet" href="history.css">
 </head>
-<body>
+<body class="settings-page">
   <main class="app-shell">
     <header class="toolbar">
       <a class="brand" href="history.html"><img src="icons/icon48.png" width="28" height="28" alt=""><span data-i18n="appName">Reopen History</span></a>
     </header>
-    <div class="content">
-      <div class="heading"><h1 data-i18n="settings"></h1></div>
-    <section class="settings-section">
-      <label class="setting"><input id="context-menu" type="checkbox"><span><strong data-i18n="showContextMenu"></strong><span class="setting-description" data-i18n="contextMenuHelp"></span></span></label>
-    </section>
-    <section class="notice">
-      <h2 data-i18n="filterTitle"></h2>
-      <p data-i18n="filterHelp"></p>
-    </section>
-    <p id="save-status" role="status" aria-live="polite"></p>
+    <div class="content settings-content">
+      <div class="heading">
+        <h1 data-i18n="settings"></h1>
+      </div>
+        <div class="language-setting">
+          <label for="language" data-i18n="language"></label>
+          <select id="language" disabled>
+            <option value="auto" data-i18n="automaticLanguage"></option>
+          </select>
+        </div>
+        <div class="font-setting">
+          <label for="min-font-size" data-i18n="minFontSize"></label>
+          <div class="font-control">
+            <input id="min-font-size" type="range" min="13" max="20" step="1" value="13" disabled>
+            <output id="min-font-size-value" for="min-font-size">13px</output>
+          </div>
+        </div>
+        <div class="setting">
+          <span><strong id="context-menu-label" data-i18n="showContextMenu"></strong></span>
+          <input id="context-menu" type="checkbox" role="switch" aria-labelledby="context-menu-label">
+        </div>
     </div>
-    <footer class="footer"><a href="history.html" data-i18n="history"></a><span data-i18n="localOnly"></span></footer>
+    <nav class="legal-links"><a href="privacy.html" data-i18n="privacyPolicy"></a><a href="support.html" data-i18n="support"></a></nav>
+    <footer class="footer settings-footer"><a href="history.html" data-i18n="history"></a><span id="save-status" role="status" aria-live="polite"></span><span data-i18n="localOnly"></span></footer>
   </main>
+  <script src="i18n.js"></script>
+  <script src="typography.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

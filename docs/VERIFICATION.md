@@ -1,5 +1,12 @@
 # Verification — 2026-11-08
 
+## 2026-11-09 manual interface language selection (1.0.1)
+
+- Added a Settings language selector: Follow browser or any of the 12 bundled languages, saved locally. Open history/settings pages, dates, context menus and toolbar tooltips update without reloading or forced focus. Browser-owned extension names and command descriptions continue to follow the browser language.
+- Shared localization loads only packaged JSON files, falls back to English, handles Chinese language/region variants, and rejects stale asynchronous loads when selections change quickly. Arabic uses RTL layout. Search, page selection and closed-tab data are preserved.
+- Core/localization tests: 24 passed. Headless Edge native and Safari-fallback checks passed, including language persistence, English/Japanese/Arabic switching, cross-page updates, localized dates/action tooltip, focus retention, RTL narrow layout, and the existing recovery/font-size checks. Actual headless Firefox native recovery passed. Mozilla web-ext lint: 0 errors, 0 warnings, 0 notices.
+- Browser packages and the signed local Safari app were built at 1.0.1; the local app was replaced and the versioned Safari Xcode project retained. Actual Safari language UI/activation remains unverified. No store upload or review submission was performed.
+
 ## Implemented
 
 - Independent Manifest V3 source with browser-specific builds for Chromium, desktop Firefox and macOS Safari.

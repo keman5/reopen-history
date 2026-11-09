@@ -1,25 +1,56 @@
 const api = globalThis.browser || globalThis.chrome;
-const t = key => api.i18n.getMessage(key);
-document.documentElement.lang = api.i18n.getUILanguage();
-document.documentElement.dir = /^(ar|he|fa|ur)(-|$)/.test(document.documentElement.lang) ? 'rtl' : 'ltr';
-for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n);
-document.title = t('settings') + ' · ' + t('appName');
+const t = ReopenI18n.t;
 const checkbox = document.querySelector('#context-menu');
 const status = document.querySelector('#save-status');
+const language = document.querySelector('#language');
+let languageRevision = 0;
+for (const { value, name } of ReopenI18n.languages) {
+  const option = new Option(name, value);
+  option.lang = value.replaceAll('_', '-');
+  language.add(option);
+}
+function setStatus(key) {
+  status.dataset.i18n = key;
+  status.textContent = t(key);
+}
+function localize() {
+  ReopenI18n.localizeDocument('settings');
+  language.value = ReopenI18n.preference;
+}
+ReopenI18n.subscribe(localize);
+ReopenI18n.ready.then(() => {
+  localize();
+  language.disabled = false;
+});
+language.addEventListener('change', async () => {
+  const current = ++languageRevision;
+  delete status.dataset.i18n;
+  status.textContent = '';
+  try {
+    await ReopenI18n.setLanguage(language.value);
+    if (current === languageRevision) setStatus('saved');
+  } catch {
+    if (current === languageRevision) {
+      language.value = ReopenI18n.preference;
+      setStatus('settingsError');
+    }
+  }
+});
 checkbox.disabled = true;
 api.storage.local.get('showContextMenu').then(saved => {
   checkbox.checked = saved.showContextMenu === true;
   checkbox.disabled = false;
-}).catch(() => { status.textContent = t('settingsError'); });
+}).catch(() => { setStatus('settingsError'); });
 checkbox.addEventListener('change', async () => {
   checkbox.disabled = true;
+  delete status.dataset.i18n;
   status.textContent = '';
   try {
     await api.storage.local.set({ showContextMenu: checkbox.checked });
-    status.textContent = t('saved');
+    setStatus('saved');
   } catch {
     checkbox.checked = !checkbox.checked;
-    status.textContent = t('settingsError');
+    setStatus('settingsError');
   } finally { checkbox.disabled = false; }
 });
 api.storage.onChanged.addListener((changes, area) => {

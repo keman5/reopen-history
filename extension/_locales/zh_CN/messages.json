@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "关闭历史"
+  },
+  "minFontSize": {
+    "message": "最小字体"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px，实时更新所有已打开的历史页和设置页。"
+  },
+  "settingsIntro": {
+    "message": "调整字体大小与恢复入口，更改后自动保存。"
+  },
+  "displaySettings": {
+    "message": "显示"
+  },
+  "behaviorSettings": {
+    "message": "操作"
+  },
+  "recoverySettings": {
+    "message": "恢复范围"
+  },
+  "fontPreview": {
+    "message": "找回刚刚关闭的网页"
+  },
+  "settingsAutoSave": {
+    "message": "更改后自动保存"
+  },
+  "language": {
+    "message": "界面语言"
+  },
+  "automaticLanguage": {
+    "message": "跟随浏览器"
+  },
+  "privacyPolicy": {
+    "message": "隐私政策"
+  },
+  "support": {
+    "message": "支持与帮助"
   }
 }

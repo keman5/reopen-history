@@ -1,0 +1,46 @@
+name: Bug report / 问题反馈
+description: Report a reproducible issue. Do not include private browsing records.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public. Do not post browsing archives, private URLs, passwords or tokens.
+        问题会公开显示，请勿提交浏览记录、私人网址、密码或令牌。
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version / 浏览器及版本
+      placeholder: Firefox 159, Edge 157, Safari 27…
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system / 系统版本
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Extension version and installation source / 扩展版本及安装来源
+      placeholder: 1.0.0, AMO / local ZIP / 本地安装…
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce / 重现步骤
+      description: Use non-sensitive example URLs if needed. / 需要网址时请使用不含个人信息的示例。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior / 预期及实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context / 补充信息
+      description: Optional screenshots with personal information removed. / 可附已遮盖个人信息的截图。

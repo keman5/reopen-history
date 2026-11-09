@@ -21,7 +21,7 @@ function worker({ native = true, saved = {}, tabs = [], sessions = [] } = {}) {
   let failCreate = false;
   const api = {
     i18n: { getMessage: key => key },
-    action: { onClicked: new Event(), setBadgeText: async () => {}, setBadgeBackgroundColor: async () => {}, setPopup: async data => popupValues.push(data.popup), openPopup: async () => popups.push(true) },
+    action: { onClicked: new Event(), setTitle: async () => {}, setBadgeText: async () => {}, setBadgeBackgroundColor: async () => {}, setPopup: async data => popupValues.push(data.popup), openPopup: async () => popups.push(true) },
     windows: { create: async data => windows.push(data) },
     commands: { onCommand: new Event() },
     contextMenus: { onClicked: new Event(), removeAll: async () => menus.clear(), create: data => { menus.set(data.id, data); } },
@@ -45,7 +45,7 @@ function worker({ native = true, saved = {}, tabs = [], sessions = [] } = {}) {
     restore: async id => { restored.push(id); sessions = sessions.filter(s => (s.tab || s.window).sessionId !== id); },
     onChanged: new Event()
   };
-  const sandbox = vm.createContext({ browser: api, ReopenCore: core, crypto: webcrypto, console: { error() {}, info() {} }, URL });
+  const sandbox = vm.createContext({ browser: api, ReopenCore: core, ReopenI18n: { t: api.i18n.getMessage, ready: Promise.resolve(), subscribe() {} }, crypto: webcrypto, console: { error() {}, info() {} }, URL });
   vm.runInContext(fs.readFileSync('extension/background.js', 'utf8'), sandbox);
   const message = data => new Promise(resolve => api.runtime.onMessage.fire(data, { id: 'test' }, resolve));
   return { api, storage, restored, created, menus, popups, popupValues, windows, message, openHistory: () => vm.runInContext("openHistory()", sandbox), failCreation: () => { failCreate = true; } };
@@ -182,27 +182,61 @@ test('Window sessions never restore an excluded page as part of a batch', () => 
   assert.deepEqual(result.map(entry => entry.id), ['clean']);
 });
 
-test('Toolbar history is always available while webpage menus remain opt-in', async () => {
+test('Toolbar only adds history while webpage recovery remains opt-in', async () => {
   const w = worker();
   w.api.runtime.onInstalled.fire();
   await w.message({ type: 'list' });
   assert.deepEqual([...w.menus.keys()], ['history']);
+  assert.deepEqual(Array.from(w.menus.get('history').contexts), ['action']);
   await w.api.storage.local.set({ showContextMenu: true });
   await w.message({ type: 'list' });
   assert.deepEqual([...w.menus.keys()], ['reopen', 'history']);
+  assert.deepEqual(Array.from(w.menus.get('reopen').contexts), ['page']);
+  assert.equal(w.menus.get('reopen').title, 'reopenAction');
   assert.deepEqual(Array.from(w.menus.get('history').contexts), ['action', 'page']);
   const restarted = worker({ saved: w.storage });
   await restarted.message({ type: 'list' });
   assert.equal(restarted.menus.size, 2);
+  assert.deepEqual(Array.from(restarted.menus.get('reopen').contexts), ['page']);
   await w.api.storage.local.set({ showContextMenu: false });
   await w.message({ type: 'list' });
   assert.deepEqual([...w.menus.keys()], ['history']);
+  assert.deepEqual(Array.from(w.menus.get('history').contexts), ['action']);
+});
+
+test('Opt-in webpage recovery menu restores only the newest session', async () => {
+  const w = worker({ sessions: [
+    { lastModified: 2, tab: { sessionId: 'latest', url: 'https://latest.test' } },
+    { lastModified: 1, tab: { sessionId: 'older', url: 'https://older.test' } }
+  ] });
+  await w.api.storage.local.set({ showContextMenu: true });
+  await w.message({ type: 'list' });
+  assert.deepEqual(Array.from(w.menus.get('reopen').contexts), ['page']);
+  w.api.contextMenus.onClicked.fire({ menuItemId: 'reopen' });
+  await w.message({ type: 'list' });
+  assert.deepEqual(w.restored, ['latest']);
+  assert.deepEqual(w.created, []);
+});
+
+test('Opt-in Safari webpage recovery menu reopens the newest saved URL', async () => {
+  const w = worker({ native: false, saved: { closedTabs: [
+    { id: 'latest', url: 'https://latest.test', closedAt: 2 },
+    { id: 'older', url: 'https://older.test', closedAt: 1 }
+  ] } });
+  await w.api.storage.local.set({ showContextMenu: true });
+  await w.message({ type: 'list' });
+  assert.deepEqual(Array.from(w.menus.get('reopen').contexts), ['page']);
+  w.api.contextMenus.onClicked.fire({ menuItemId: 'reopen' });
+  const result = await w.message({ type: 'list' });
+  assert.deepEqual(w.created.map(tab => tab.url), ['https://latest.test']);
+  assert.deepEqual(Array.from(result.entries, entry => entry.id), ['older']);
 });
 
 test('An update clears menus from the old default without changing stored Safari history', async () => {
   const saved = { closedTabs: [{ id: 'saved', url: 'https://saved.test' }] };
   const w = worker({ native: false, saved });
   w.menus.set('old-menu', {});
+  w.menus.set('reopen', { contexts: ['action'] });
   w.api.runtime.onInstalled.fire();
   assert.equal((await w.message({ type: 'list' })).entries.length, 1);
   assert.deepEqual([...w.menus.keys()], ['history']);

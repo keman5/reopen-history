@@ -94,5 +94,41 @@
   },
   "menuHistory": {
     "message": "Closed history"
+  },
+  "minFontSize": {
+    "message": "Minimum font size"
+  },
+  "minFontSizeHelp": {
+    "message": "13–20px. Updates all open history and settings pages immediately."
+  },
+  "settingsIntro": {
+    "message": "Adjust text size and recovery controls. Changes save automatically."
+  },
+  "displaySettings": {
+    "message": "Display"
+  },
+  "behaviorSettings": {
+    "message": "Actions"
+  },
+  "recoverySettings": {
+    "message": "Recovery scope"
+  },
+  "fontPreview": {
+    "message": "Reopen a recently closed page"
+  },
+  "settingsAutoSave": {
+    "message": "Changes save automatically"
+  },
+  "language": {
+    "message": "Interface language"
+  },
+  "automaticLanguage": {
+    "message": "Follow browser"
+  },
+  "privacyPolicy": {
+    "message": "Privacy policy"
+  },
+  "support": {
+    "message": "Support"
   }
 }

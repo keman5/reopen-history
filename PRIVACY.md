@@ -1,13 +1,115 @@
-# Privacy
+# Privacy policy / 隐私政策
 
-Reopen History does not transmit tab history, titles, addresses or identifiers to the developer or any service. It has no analytics, accounts, telemetry, remote resources or content scripts. Page titles and addresses are rendered as text, never executable HTML.
+Effective / updated: 2026-11-09
 
-All browsers keep up to 1,000 eligible closed entries in `storage.local`, including URL, title, pinned state, entry/session identifier, close time and window tab count when available. Small inline raster favicons (at most 2,048 characters per data URL) exposed by browser metadata may also be retained with each entry. Remote URLs and SVG images are excluded from this cache. Chrome, Edge and Firefox import the browser's current closed-session list and accumulate records while active. They use native recovery for sessions still available; expired archived entries reopen the saved URL only. Chromium and Firefox request tab metadata permission to display and search session titles and addresses.
+Maintainer: [keman5](https://github.com/keman5/reopen-history)
 
-All browsers store a local boolean preference (`showContextMenu`) for optional webpage context menus, which default to off. The toolbar history menu is always available. This preference contains no browsing history and is not synced by the extension.
+## Privacy policy
 
-Safari lacks the sessions API, so it records closed HTTP(S) tabs locally and also caches currently open eligible tabs so their URLs remain available after closure. Private tabs and browser-internal, file, data and script URLs are excluded. Browser storage is not an encrypted password vault; URLs can contain sensitive query parameters. Uninstalling the extension removes its extension storage under the browser's normal data lifecycle.
+Reopen History is maintained by GitHub user keman5. The extension processes closed-tab records on your device. It does not send browsing records to the developer and has no ads, analytics or account system.
 
-Using Reopen History to reopen a tab loads its original website, subject to that website's own privacy policy. Chromium builds additionally request `favicon` permission and display icons using the browser-local `_favicon` cache endpoint. This does not query a third-party icon service. Firefox/Safari display available inline icons or colored domain initials. The extension does not request remote favicon URLs or perform background network calls.
+### Data handled and its purpose
 
-No browsing data is collected by the developer. Contact or report issues through the repository.
+To display, search and reopen eligible closed pages, the extension reads and locally stores page titles, URLs, close times and, when available, pinned state, session or entry identifiers and window tab counts. Small inline raster favicons provided by the browser may be retained with an entry. Up to 1,000 closed entries are kept.
+
+Preferences include the optional webpage context-menu setting, a minimum text size of 13–20px and the interface language. They are saved in browser storage.local. The extension does not enable cross-device synchronization. Translations are bundled locally; no translation service is contacted.
+
+### Browser-specific behavior
+
+Chrome, Edge and Firefox read the browser’s available recently closed sessions and accumulate local records while active. Available sessions use native restoration; expired archived entries reopen their saved URL only. The complete history from before installation cannot be imported.
+
+Safari has no sessions API, so the extension also caches eligible currently open tabs, including title, URL and pinned state, to recover their URLs after closure. Safari cannot restore form contents, scroll position, navigation history or complete window layouts, or pages closed while the extension is not running. Only macOS Safari is supported.
+
+### Excluded pages
+
+Only ordinary HTTP/HTTPS pages are eligible. Tabs identified by the browser as private/incognito, extension pages, new-tab and blank pages, browser-internal pages and file, data or javascript URLs are excluded.
+
+### Permission purposes
+
+
+- sessions: lists and restores recently closed sessions in Chrome, Edge and Firefox.
+- tabs: reads titles and URLs for displaying, searching and recording eligible entries; Safari also uses it to track tab metadata before closure.
+- storage: saves local records and preferences.
+- contextMenus: provides the toolbar history menu and optional webpage recovery and history menus, which are off by default.
+- favicon: uses the browser-local favicon cache in Chrome/Edge. Firefox/Safari use available inline icons or domain initials.
+
+### Transfers, sharing and remote code
+
+The extension does not send browsing records to the developer, sell or share them, include telemetry, advertising SDKs, content scripts or remotely hosted executable code, or contact a third-party favicon service. It does not read page body content, forms, passwords or cookies.
+
+Reopening a page loads its original website normally. Opening a GitHub, support or public policy link visits that website; the website and its host process requests under their own policies. The extension does not automatically attach closed-tab records or diagnostics to these links.
+
+### Retention and deletion
+
+The local archive is limited to 1,000 closed entries, with older records replaced as new ones arrive. Successfully restored entries are removed from the extension’s closed list. Preferences remain until changed or cleared. Safari’s open-tab cache changes with tab state. The extension keeps no server-side copy.
+
+Disabling the extension stops future recording but does not necessarily erase existing data. Use your browser’s extension removal or data-clearing controls to remove extension data; actual cleanup timing is controlled by the browser and operating system. Deleting the Safari host app alone should not be treated as confirmed deletion of all browser data. Extension records are separate from the browser’s own history and recently closed sessions; clearing one does not automatically clear the other.
+
+### Local security and your choices
+
+Browser local storage is not an encrypted password vault. Titles and URLs may contain personal details or sensitive query parameters. Use your own browser profile and clear data as appropriate on shared devices.
+
+No registration is needed. Webpage menus are off by default and can be changed in Settings, along with text size and language. These records are not used for advertising profiles or tracking.
+
+### Updates and contact
+
+This policy takes effect and was last updated on November 9, 2026. Changes to features or data handling will be reflected in the policy and relevant store disclosures.
+
+Contact the maintainer for privacy questions and general support through this project’s GitHub Issues. Issues are public: do not post private URLs, browsing records, passwords, tokens or other personal information. If necessary, first request contact without sensitive details.
+
+[GitHub Issues](https://github.com/keman5/reopen-history/issues) · [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
+
+## 隐私政策
+
+恢复已关闭标签（Reopen History）由 GitHub 用户 keman5 维护。扩展在本机处理关闭标签页的记录，不把浏览记录上传给开发者，也没有广告、统计或账号系统。
+
+### 处理哪些数据，为什么需要它们
+
+为了显示、搜索和恢复关闭的页面，扩展会读取并在浏览器本地保存符合条件的网页标题、URL、关闭时间，以及可用的固定状态、会话或记录标识、窗口标签数量。浏览器提供的小型内嵌栅格网站图标也可能随记录保存。记录最多保留 1,000 条。
+
+偏好设置包括网页右键菜单开关、13–20px 最小字号和界面语言。它们都保存在浏览器的 storage.local 中，扩展不启用跨设备同步。语言文件随扩展安装，不使用在线翻译服务。
+
+### 不同浏览器的处理方式
+
+Chrome、Edge 和 Firefox 读取浏览器仍提供的最近关闭会话，并在扩展运行时积累本地记录。仍有效的会话使用浏览器原生恢复；过期记录只重新打开保存的网址。安装前的全部历史无法回填。
+
+Safari 没有 sessions API，因此还会缓存当前打开的合格标签页的标题、网址和固定状态，用于关闭后恢复网址。Safari 不能恢复表单、滚动位置、前进后退历史或完整窗口布局，也不能恢复扩展未运行期间关闭的页面。仅支持 macOS Safari。
+
+### 不处理哪些页面
+
+仅普通 HTTP/HTTPS 页面可进入恢复记录。浏览器标记为私密或无痕的标签、扩展页面、新标签页、空白页、浏览器内部页面以及 file、data、javascript 等网址不进入记录。
+
+### 权限用途
+
+
+- sessions：列出并恢复浏览器最近关闭的会话（Chrome、Edge、Firefox）。
+- tabs：获取显示、搜索与记录所需的标题和网址；Safari 同时用于追踪关闭前的标签信息。
+- storage：保存本地恢复记录与偏好设置。
+- contextMenus：提供工具栏历史菜单，以及默认关闭、由用户选择开启的网页恢复与历史菜单。
+- favicon：在 Chrome/Edge 使用浏览器本地网站图标缓存。Firefox/Safari 使用可用的内嵌图标或域名首字母。
+
+### 传输、共享与远程代码
+
+扩展不向开发者发送浏览记录，不出售或共享这些记录，不含遥测、广告 SDK、内容脚本或远程托管的可执行代码，也不调用第三方网站图标服务。它不读取网页正文、表单、密码或 Cookie。
+
+用户主动恢复网页时，浏览器会正常加载原网站。主动打开 GitHub、支持链接或公开政策网页时，也会访问对应网站；这些网站及其托管服务依照各自政策处理请求。扩展不会在这些链接中自动附带关闭标签记录或诊断数据。
+
+### 保存期限与删除
+
+本地关闭记录上限为 1,000 条，较旧记录会被新记录替代；成功恢复的条目会从扩展的关闭记录中移除。偏好设置保留到修改或清除。Safari 的开页缓存随标签状态更新。扩展不维护服务器端副本。
+
+停用扩展会停止后续记录，但不保证清除已有本地数据。要移除扩展数据，请使用浏览器的扩展移除或数据清除功能；实际清理时机由浏览器和系统决定。仅删除 Safari 承载应用不应被当作已确认清除全部浏览器数据。扩展记录与浏览器自身的历史记录、最近关闭列表相互独立，清除其中一项不等于清除另一项。
+
+### 本地安全与用户选择
+
+浏览器本地存储不是加密密码库，标题和 URL 可能包含私人信息或敏感查询参数。请在自己的浏览器配置文件中使用，并在共享设备上按需要清理数据。
+
+无需注册即可使用。网页右键菜单默认关闭，可在设置中更改；字号和语言可随时调整。我们不使用这些数据建立广告画像或进行追踪。
+
+### 政策更新与联系
+
+本政策生效及最近更新日期为 2026-11-09。功能或数据处理方式改变时，会随发布更新本政策及相关商店声明。
+
+隐私问题和一般支持均通过本项目 GitHub Issues 联系维护者。Issues 为公开渠道：请勿发布私人网址、完整浏览记录、密码、令牌或其他个人信息。必要时先提出不含敏感详情的联系请求。
+
+[GitHub Issues](https://github.com/keman5/reopen-history/issues) · [GitHub 隐私声明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)

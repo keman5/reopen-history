@@ -7,6 +7,7 @@ const version = JSON.parse(await readFile('package.json')).version;
 const output = join(homedir(), 'downloads', 'dist');
 await mkdir(output, { recursive: true });
 const common = {
+  // Omit homepage_url so store installations use the browser's native store link.
   manifest_version: 3, name: '__MSG_appName__', version, default_locale: 'en',
   description: '__MSG_description__',
   icons: { 16: 'icons/icon16.png', 32: 'icons/icon32.png', 48: 'icons/icon48.png', 128: 'icons/icon128.png', 512: 'icons/icon512.png' },
@@ -25,7 +26,7 @@ for (const target of ['chromium', 'firefox', 'safari']) {
   await cp('node_modules/tldts/dist/index.umd.min.js', `${dir}/vendor/tldts.js`);
   await cp('node_modules/tldts/LICENSE', `${dir}/vendor/tldts-LICENSE.txt`);
   const manifest = { ...common, permissions: ['storage', 'contextMenus', 'tabs', ...(target === 'safari' ? [] : ['sessions'])] };
-  manifest.background = target === 'chromium' ? { service_worker: 'background.js' } : { scripts: ['core.js', 'background.js'] };
+  manifest.background = target === 'chromium' ? { service_worker: 'background.js' } : { scripts: ['core.js', 'i18n.js', 'background.js'] };
   if (target === 'safari') {
     manifest.options_ui = { page: 'options.html' };
   }
@@ -44,7 +45,7 @@ for (const target of ['chromium', 'firefox', 'safari']) {
     assert.deepEqual(Object.keys(messages).sort(), Object.keys(english).sort(), `Incomplete locale: ${locale}`);
     for (const value of Object.values(messages)) assert.ok(value.message?.trim());
   }
-  for (const path of ['options.html', 'options.js', 'history.html', 'history.js', 'core.js', 'background.js', 'icons/icon128.png']) assert.ok((await readFile(`${dir}/${path}`)).length);
+  for (const path of ['options.html', 'options.js', 'history.html', 'history.js', 'i18n.js', 'typography.js', 'core.js', 'background.js', 'privacy.html', 'support.html', 'legal.css', 'icons/icon128.png']) assert.ok((await readFile(`${dir}/${path}`)).length);
   const archive = join(output, `reopen-history-${target}-${version}.zip`);
   await rm(archive, { force: true });
   execFileSync('/usr/bin/zip', ['-qr', archive, '.'], { cwd: dir });
