@@ -2,12 +2,14 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 output_dir="$HOME/downloads/dist"
+npm version patch --no-git-tag-version >/dev/null
 version="$(node -p 'require("./package.json").version')"
 safari_build_dir="$output_dir/.reopen-history-safari-build"
 # Clean generated output and the workspace-required Go caches.
 if command -v go >/dev/null 2>&1; then go clean -cache -testcache; fi
 rm -rf -- .artifacts dist
 mkdir -p "$output_dir"
+node scripts/render-icons.cjs
 node --test tests/*.test.cjs
 node scripts/package-extension.mjs
 if [[ "${1:-}" == "--safari" ]]; then
@@ -20,9 +22,11 @@ if [[ "${1:-}" == "--safari" ]]; then
   xcodebuild -project "$safari_build_dir/project/Reopen History/Reopen History.xcodeproj" \
     -scheme 'Reopen History' -configuration Release \
     -derivedDataPath "$safari_build_dir/derived" MACOSX_DEPLOYMENT_TARGET=13.0 \
+    CONFIGURATION_BUILD_DIR="$safari_build_dir/products" \
+    MARKETING_VERSION="$version" CURRENT_PROJECT_VERSION="$version" \
     CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY="${SAFARI_SIGN_IDENTITY:--}" \
     DEVELOPMENT_TEAM="${SAFARI_TEAM:-}" build
-  safari_app="$safari_build_dir/derived/Build/Products/Release/Reopen History.app"
+  safari_app="$safari_build_dir/products/Reopen History.app"
   codesign --verify --deep --strict "$safari_app"
   rm -rf -- "$output_dir/Reopen History.app"
   ditto "$safari_app" "$output_dir/Reopen History.app"

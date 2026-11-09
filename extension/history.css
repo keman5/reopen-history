@@ -6,6 +6,7 @@
 @media(prefers-reduced-transparency:reduce){.toolbar,.footer{background:var(--surface);backdrop-filter:none}}
 @media(prefers-contrast:more){:root{--muted:var(--ink)}.app-shell,.search{border:1px solid var(--ink)}}
 
+.toolbar-links{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .actions{display:flex;align-items:center;gap:12px;margin-bottom:14px}.actions .search{flex:1;min-width:0;margin:0}.latest-badge{display:inline-block;color:var(--accent);background:var(--hover);padding:1px 6px;border-radius:5px;font-size:11px}.pagination:not([hidden]){display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:14px;margin-top:10px}.page-button{min-height:36px;border:1px solid var(--line);border-radius:8px;padding:6px 12px;background:var(--surface);color:var(--ink);cursor:pointer}.page-button:hover:not(:disabled){background:var(--hover)}#page-status{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 
 .entry-icon{position:relative;width:34px;height:34px;border-radius:9px;font-size:15px;font-weight:650;color:#fff;background:var(--site-color)}
