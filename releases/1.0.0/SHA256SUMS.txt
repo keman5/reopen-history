@@ -1,0 +1,6 @@
+49cacc744aeb7f7118de36fb92e8e437cbc1ffa162a1a2e671ab55c84b922094  reopen-history-chromium-1.0.0.zip
+475bd44801c1c55208632034673bd58c126199e4b5e3e40924551f2570df6d8f  reopen-history-firefox-1.0.0.zip
+005356cba0906a9b2aacf95ef1f1fd5eb14ccd22169d597b75cb4d4b0a5fa04e  reopen-history-safari-1.0.0.zip
+c2f98317f2224f36829df136254534828bc8673eef17befa056bf0abbdd7b666  reopen-history-review-source-1.0.0.zip
+4638796eb8e9a675d5ffa3cc14228922d9ef08d9fe8555aa7d434a4c6df69bc6  reopen-history-store-pages-1.0.0.zip
+cc0dcdbcd5afe02326b1955628e5673764a7b735e0917a78b5b3ab8481ba7244  reopen-history-safari-macos-1.0.0.zip

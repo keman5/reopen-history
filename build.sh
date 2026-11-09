@@ -88,3 +88,6 @@ if $build_safari; then checksum_files+=(reopen-history-safari-macos.zip); fi
   cd "$output_dir"
   shasum -a 256 "${checksum_files[@]}" > "reopen-history-$version-SHA256SUMS.txt"
 )
+release_args=()
+if $build_safari; then release_args+=(--safari-app); fi
+node scripts/package-github-release.mjs "${release_args[@]}"

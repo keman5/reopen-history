@@ -12,6 +12,12 @@ Privacy and support pages are bundled for offline reading and generated for stat
 
 For the 1.0.0 release, see the [four-store publishing guide](docs/STORE-PUBLISHING.zh-CN.md). It includes upload file mappings, reviewer instructions, privacy/permission explanations and the local Safari App Store archive/export workflow.
 
+## Downloads
+
+Download all browser packages from [GitHub Releases](https://github.com/keman5/reopen-history/releases/latest) or the checked-in [1.0.0 packages and installation instructions](releases/1.0.0/README.md). Chrome and Edge share the Chromium ZIP. Firefox's ZIP is unsigned and supports temporary loading only. The Safari macOS host is an Apple Silicon development distribution, not an App Store or confirmed notarized package.
+
+Builds also prepare versioned files in `releases/<version>/`. To package existing local 1.0.0 artifacts without incrementing the version, run `bash scripts/github-release/build.sh --from-existing --safari-app`. After committing and pushing the release files, append `--publish` to attach them to a new GitHub Release. Existing releases are never overwritten automatically.
+
 ## Screenshots
 
 Actual screenshots of the extension running in Simplified Chinese.

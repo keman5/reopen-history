@@ -8,6 +8,12 @@
 
 [English](../README.md) · [隐私说明](../PRIVACY.md) · [四个平台上架指南](STORE-PUBLISHING.zh-CN.md)
 
+## 下载安装包
+
+前往 [GitHub Releases](https://github.com/keman5/reopen-history/releases/latest) 下载，或在仓库的 [1.0.0 安装包目录](../releases/1.0.0/README.md) 获取同一批文件与安装说明。Chrome 和 Edge 共用 Chromium ZIP；Firefox ZIP 未经 Mozilla 签名，只能临时加载；Safari macOS 宿主为 Apple Silicon 开发分发包，不等同于 App Store 或已确认公证的安装包。
+
+构建脚本会将附件和 SHA-256 校验值同步整理到 `releases/<版本>/`。复用本机现有产物：`bash scripts/github-release/build.sh --from-existing --safari-app`。提交并推送文件后，追加 `--publish` 发布 GitHub Release；不会自动覆盖已有 Release。
+
 ## 实际截图
 
 以下为扩展简体中文界面的实际运行截图。
