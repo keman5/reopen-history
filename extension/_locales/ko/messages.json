@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "닫은 탭 복원"
+  },
   "description": {
     "message": "클릭 한 번으로 닫은 탭을 복원하고 최근 닫은 탭을 검색하세요."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "$1 / $2 페이지"
+  },
+  "menuHistory": {
+    "message": "닫은 탭 기록"
   }
 }

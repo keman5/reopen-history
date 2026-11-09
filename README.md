@@ -29,7 +29,7 @@ Safari does not implement `sessions`. Its fallback begins recording after the ex
 
 ## Build and install
 
-Requirements: Node.js 22+, `zip`, installed Microsoft Edge (headless icon rendering); Xcode for the Safari app. The extension has **no runtime dependencies**. Playwright is used only for development tests.
+Requirements: Node.js 22+, `zip`, installed Microsoft Edge (headless icon rendering); Xcode for the Safari app. The extension bundles the MIT-licensed `tldts` public-suffix parser locally to derive registrable domains correctly (including `co.uk` and private hosting suffixes); it does not load runtime libraries from a CDN. Playwright is used only for development tests.
 
 ```sh
 npm ci
@@ -68,18 +68,23 @@ npm run test:firefox
 
 The browser check runs installed Microsoft Edge **headlessly** in a disposable profile and serves test pages on localhost. It never touches your existing browser profile or foreground windows. It verifies actual native-session recovery, list ordering, 100-entry pagination, searching, short/long press, Escape, options persistence, invalid-page filtering, and safe rendering of untrusted titles. It invokes the toolbar's shared restore function headlessly; it does not prove a physical click on the native toolbar. Use `TEST_BROWSER=chromium` to test a separately installed Playwright Chromium build. The Safari fallback check runs its scripts in headless Edge with only the background manifest adapted; it does not verify Safari itself. The Firefox check uses `web-ext` from npm, an installed `/Applications/Firefox.app`, and a disposable extension/profile with a localhost-only result reporter.
 
+## Site icons
+
+History rows use a stable color and the registrable domain’s initial (for example, `docs.google.com` → G and `news.bbc.co.uk` → B). Chromium builds request `favicon` permission to display icons from the browser’s local `_favicon` cache. The browser may return its generic icon when a site icon is unavailable. Small inline raster icons exposed by browser tab/session metadata are retained with local history; invalid/failed images fall back to the letter. Remote favicon URLs are not fetched and no third-party favicon service receives browsing domains. Firefox/Safari use inline icons when available and otherwise the colored initial; existing records cannot gain an inline icon retroactively.
+
 ## Languages
 
 English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français, Español, Português (Brasil), Italiano, Русский, العربية. The browser selects the language automatically, falls back to English, and uses right-to-left layout for Arabic. Every packaged locale must have the same complete set of keys.
 
 ## Permissions
 
+- `favicon` (Chromium): read browser-cached site icons locally.
 - `sessions` (Chromium/Firefox): list and restore the browser's closed sessions.
 - `contextMenus`: toolbar history menu; optional webpage recovery/history menus are disabled by default.
 - `storage`: local context-menu preference and up to 1,000 archived history entries; Safari also caches eligible open-tab metadata.
 - `tabs`: Safari needs URLs and titles to track closed tabs; Chromium and Firefox also require this permission to display and search native session titles and URLs.
 
-No content scripts, host permissions, remote favicons, telemetry, accounts, external libraries or network requests are used by the extension. Restoring a tab naturally loads its website. Browsing metadata is sensitive even when it stays local; see [PRIVACY.md](PRIVACY.md).
+No content scripts, host permissions, remote favicons, telemetry, accounts or external network requests are used by the extension. Restoring a tab naturally loads its website. Browsing metadata is sensitive even when it stays local; see [PRIVACY.md](PRIVACY.md).
 
 ## License
 

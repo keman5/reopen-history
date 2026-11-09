@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "恢復已關閉標籤"
+  },
   "description": {
     "message": "按一下還原已關閉的分頁，瀏覽與搜尋最近關閉的分頁記錄。"
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "第 $1 / $2 頁"
+  },
+  "menuHistory": {
+    "message": "關閉歷史"
   }
 }

@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "恢复已关闭标签"
+  },
   "description": {
     "message": "单击恢复关闭的标签页，浏览和搜索最近关闭的标签页历史。"
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "第 $1 / $2 页"
+  },
+  "menuHistory": {
+    "message": "关闭历史"
   }
 }

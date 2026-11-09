@@ -8,7 +8,6 @@ safari_build_dir="$output_dir/.reopen-history-safari-build"
 if command -v go >/dev/null 2>&1; then go clean -cache -testcache; fi
 rm -rf -- .artifacts dist
 mkdir -p "$output_dir"
-node scripts/render-icons.cjs
 node --test tests/*.test.cjs
 node scripts/package-extension.mjs
 if [[ "${1:-}" == "--safari" ]]; then

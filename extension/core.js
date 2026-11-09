@@ -10,6 +10,24 @@
     catch { return false; }
   }
 
+  function siteIdentity(url) {
+    try {
+      const host = new URL(url).hostname;
+      const parser = typeof module !== 'undefined' ? require('tldts') : root.tldts;
+      const domain = parser.getDomain(host, { allowPrivateDomains: true }) || host;
+      const label = domain.split('.')[0];
+      let hash = 0;
+      for (const char of domain) hash = (hash * 31 + char.codePointAt(0)) >>> 0;
+      return { domain, letter: Array.from(label)[0]?.toUpperCase() || '?', color: hash % 8 };
+    } catch { return { domain: '', letter: '?', color: 0 }; }
+  }
+
+  // Keep only small inline raster icons: remote URLs and active SVG never enter the cache.
+  function cachedIcon(value) {
+    return typeof value === 'string' && value.length <= 2048 &&
+      /^data:image\/(png|jpeg|gif|webp|x-icon|vnd\.microsoft\.icon);base64,[a-z0-9+/]+=*$/i.test(value) ? value : '';
+  }
+
   function sessionsToEntries(sessions) {
     return sessions.flatMap(session => {
       const item = session.tab || session.window;
@@ -24,7 +42,8 @@
         url: session.tab?.url || tabs[0]?.url || '',
         closedAt: session.lastModified * 1000,
         tabCount: session.window ? tabs.length : 0,
-        pinned: Boolean(session.tab?.pinned)
+        pinned: Boolean(session.tab?.pinned),
+        favIconUrl: cachedIcon(session.tab?.favIconUrl || tabs[0]?.favIconUrl)
       }];
     });
   }
@@ -54,6 +73,6 @@
     });
   }
 
-  root.ReopenCore = { isRestorable, sessionsToEntries, bindPress };
+  root.ReopenCore = { isRestorable, sessionsToEntries, bindPress, siteIdentity, cachedIcon };
   if (typeof module !== 'undefined') module.exports = root.ReopenCore;
 })(globalThis);

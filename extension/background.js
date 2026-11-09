@@ -1,6 +1,6 @@
 if (typeof importScripts === 'function') importScripts('core.js');
 const api = globalThis.browser || globalThis.chrome;
-const { isRestorable, sessionsToEntries } = ReopenCore;
+const { isRestorable, sessionsToEntries, cachedIcon } = ReopenCore;
 const nativeSessions = Boolean(api.sessions?.getRecentlyClosed);
 const t = (key, substitutions) => api.i18n.getMessage(key, substitutions);
 const HISTORY_LIMIT = 1000;
@@ -44,13 +44,11 @@ async function restore(id) {
   // Remove only after recovery succeeds, preserving data on failure.
   closedTabs = closedTabs.filter(item => item.id !== entry.id);
   await api.storage.local.set({ closedTabs });
-  await updateBadge();
+  await refreshHistory();
 }
 
-async function updateBadge() {
-  const recent = await entries();
-  await api.action.setBadgeText({ text: recent.length ? String(recent.length) : '' });
-  await api.action.setBadgeBackgroundColor({ color: '#0071e3' });
+async function refreshHistory() {
+  await entries();
 }
 
 async function openHistory() {
@@ -74,14 +72,16 @@ api.contextMenus.onClicked.addListener(info => {
 async function updateMenus() {
   await api.contextMenus.removeAll();
   const { showContextMenu } = await api.storage.local.get('showContextMenu');
-  api.contextMenus.create({ id: 'history', title: t('history'), contexts: showContextMenu === true ? ['action', 'page'] : ['action'] });
-  if (showContextMenu === true) api.contextMenus.create({ id: 'reopen', title: t('reopen'), contexts: ['page'] });
+  if (showContextMenu === true) api.contextMenus.create({ id: 'reopen', title: t('reopenAction'), contexts: ['page'] });
+  api.contextMenus.create({ id: 'history', title: t('menuHistory'), contexts: showContextMenu === true ? ['action', 'page'] : ['action'] });
 }
 api.runtime.onInstalled.addListener(() => { serial(updateMenus); });
 api.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && Object.hasOwn(changes, 'showContextMenu')) serial(updateMenus);
 });
 serial(updateMenus);
+// Clear badges left by older versions; history changes no longer add a count.
+serial(() => api.action.setBadgeText({ text: '' }));
 api.runtime.onMessage.addListener((message, sender, respond) => {
   if (sender.id !== api.runtime.id) return false;
   if (!['list', 'restore'].includes(message?.type)) return false;
@@ -93,12 +93,12 @@ api.runtime.onMessage.addListener((message, sender, respond) => {
 });
 
 if (nativeSessions) {
-  api.sessions.onChanged.addListener(() => { serial(updateBadge).catch(console.error); });
+  api.sessions.onChanged.addListener(() => { serial(refreshHistory).catch(console.error); });
   serial(async () => {
     const saved = await api.storage.local.get('closedTabs');
     closedTabs = (saved.closedTabs || []).filter(isRestorable).slice(0, HISTORY_LIMIT);
     await api.storage.local.set({ closedTabs });
-    await updateBadge();
+    await refreshHistory();
   });
 } else {
   serial(async () => {
@@ -106,17 +106,17 @@ if (nativeSessions) {
     closedTabs = (saved.closedTabs || []).filter(isRestorable).slice(0, HISTORY_LIMIT);
     liveTabs = saved.liveTabs || {};
     const current = await api.tabs.query({});
-    const snapshots = Object.fromEntries(current.filter(isRestorable).map(({ id, url, title, pinned }) => [id, { url, title, pinned }]));
+    const snapshots = Object.fromEntries(current.filter(isRestorable).map(({ id, url, title, pinned, favIconUrl }) => [id, { url, title, pinned, favIconUrl: cachedIcon(favIconUrl) }]));
     // Preserve cached metadata for removal events queued while the worker wakes.
     for (const id of removedWhileStarting) if (isRestorable(liveTabs[id])) snapshots[id] = liveTabs[id];
     liveTabs = snapshots;
     starting = false;
     removedWhileStarting.clear();
     await api.storage.local.set({ closedTabs, liveTabs });
-    await updateBadge();
+    await refreshHistory();
   });
   const remember = tab => serial(async () => {
-    if (isRestorable(tab)) liveTabs[tab.id] = { url: tab.url, title: tab.title, pinned: tab.pinned };
+    if (isRestorable(tab)) liveTabs[tab.id] = { url: tab.url, title: tab.title, pinned: tab.pinned, favIconUrl: cachedIcon(tab.favIconUrl) };
     else delete liveTabs[tab.id];
     await api.storage.local.set({ liveTabs });
   });
@@ -132,7 +132,7 @@ if (nativeSessions) {
         closedTabs = closedTabs.slice(0, HISTORY_LIMIT);
       }
       await api.storage.local.set({ closedTabs, liveTabs });
-      await updateBadge();
+      await refreshHistory();
     }).catch(console.error);
   });
 }

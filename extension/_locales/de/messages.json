@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Geschlossene Tabs wiederherstellen"
+  },
   "description": {
     "message": "Geschlossene Tabs mit einem Klick öffnen. Kürzlich geschlossene Tabs durchsuchen."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "Seite $1 von $2"
+  },
+  "menuHistory": {
+    "message": "Verlauf geschlossener Tabs"
   }
 }

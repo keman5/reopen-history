@@ -52,6 +52,25 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
     assert.equal(titles[0], 'Recovery test /second');
     assert.equal(titles[1], 'Recovery test /first');
     console.log('PASS: closed tabs render newest first');
+    const appName = await history.evaluate(() => api.i18n.getMessage('appName'));
+    assert.equal(await history.locator('.brand span').textContent(), appName);
+    assert.ok((await history.title()).endsWith(' · ' + appName));
+    assert.equal(await worker.evaluate(() => api.runtime.getManifest().name), appName);
+    assert.equal(require('../extension/_locales/zh_CN/messages.json').appName.message, '恢复已关闭标签');
+    console.log('PASS: localized extension name, history brand and document title');
+
+    assert.equal(await worker.evaluate(() => api.action.getBadgeText({})), '');
+    assert.equal(await worker.evaluate(() => api.runtime.getManifest().action.default_icon), 'icons/icon128.png');
+    assert.equal(await history.locator('#reopen').getAttribute('title'), null);
+    assert.equal(await history.locator('#reopen').getAttribute('data-i18n-title'), null);
+    const chromeHeights = await history.evaluate(() => ({
+      header: document.querySelector('.toolbar').getBoundingClientRect().height,
+      footer: document.querySelector('.footer').getBoundingClientRect().height
+    }));
+    assert.ok(chromeHeights.header <= 44);
+    assert.ok(chromeHeights.footer <= 32);
+    console.log('PASS: compact header/footer, no button hint or numeric badge, existing icon128 used');
+
 
     await history.getByRole('searchbox').fill('/first');
     assert.equal(await history.locator('.entry').count(), 1);
@@ -62,6 +81,9 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
 
     const options = await context.newPage();
     await options.goto(`chrome-extension://${id}/options.html`);
+    await options.waitForFunction(() => document.title.endsWith(' · ' + api.i18n.getMessage('appName')));
+    assert.equal(await options.locator('.brand span').textContent(), appName);
+
     const menu = options.locator('#context-menu');
     await menu.waitFor();
     await menu.isEnabled();
@@ -179,11 +201,35 @@ const output = path.join(os.homedir(), 'downloads', 'dist');
     assert.equal(await history.locator('#pagination').isVisible(), false);
     console.log('PASS: unified list, latest-only badge, 100-entry pages, navigation, search reset and shrinking-page clamp');
 
+    const siteIcons = await history.evaluate(async () => {
+      const icon = siteIcon({ url: 'https://docs.google.com', favIconUrl: 'https://tracker.test/icon.png' });
+      const remote = icon.querySelector('img')?.src || '';
+      icon.querySelector('img')?.dispatchEvent(new Event('error'));
+      const data = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aD1sAAAAASUVORK5CYII=';
+      const cached = siteIcon({ url: 'https://example.com', favIconUrl: data });
+      document.body.append(cached);
+      const loaded = await new Promise(resolve => {
+        const image = cached.querySelector('img');
+        image.addEventListener('load', () => resolve(true));
+        image.addEventListener('error', () => resolve(false));
+      });
+      const shown = cached.classList.contains('has-favicon');
+      cached.remove();
+      return { letter: icon.textContent, images: icon.querySelectorAll('img').length, color: icon.className, remote, loaded, shown };
+    });
+    assert.equal(siteIcons.letter, 'G');
+    assert.equal(siteIcons.images, 0);
+    assert.match(siteIcons.color, /site-color-[0-7]/);
+    assert.equal(siteIcons.remote.includes('tracker.test'), false);
+    assert.equal(siteIcons.loaded, true);
+    assert.equal(siteIcons.shown, true);
+    console.log('PASS: colored main-domain initials, cached raster icon display, load-error fallback and remote URL exclusion');
+
     // UI strings and unsafe page titles must be treated as plain text.
     const rendered = await history.evaluate(() => {
       recent = [{ id: 'fake', title: '<img src=x onerror=alert(1)>', url: 'https://example.test', closedAt: Date.now(), tabCount: 0 }];
       render();
-      return { images: document.querySelectorAll('#list img').length, title: document.querySelector('.title').textContent };
+      return { images: document.querySelectorAll('#list img:not(.entry-icon img)').length, title: document.querySelector('.title').textContent };
     });
     assert.equal(rendered.images, 0);
     assert.equal(rendered.title, '<img src=x onerror=alert(1)>');

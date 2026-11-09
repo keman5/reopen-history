@@ -4,20 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>Reopen History</title>
+  <title data-i18n="appName">Reopen History</title>
   <link rel="icon" href="icons/icon32.png">
   <link rel="stylesheet" href="history.css">
 </head>
-<body>
+<body class="history-page">
   <main class="app-shell">
     <header class="toolbar">
-      <a class="brand" href="history.html" tabindex="-1"><img src="icons/icon48.png" width="28" height="28" alt=""><span>Reopen History</span></a>
+      <a class="brand" href="history.html" tabindex="-1"><img src="icons/icon48.png" width="28" height="28" alt=""><span data-i18n="appName">Reopen History</span></a>
       <a id="settings-link" class="icon-button" href="options.html" data-i18n-label="settings"><svg aria-hidden="true"><use href="icons/ui.svg#settings"/></svg></a>
     </header>
     <div class="content">
       <div class="actions">
         <label class="search"><svg aria-hidden="true"><use href="icons/ui.svg#search"/></svg><input id="search" type="search" data-i18n-placeholder="search" autocomplete="off"></label>
-        <button id="reopen" class="primary" aria-controls="history" aria-expanded="true" data-i18n-title="pressHint"><svg aria-hidden="true"><use href="icons/ui.svg#return"/></svg><span data-i18n="reopenAction"></span></button>
+        <button id="reopen" class="primary" aria-controls="history" aria-expanded="true"><svg aria-hidden="true"><use href="icons/ui.svg#return"/></svg><span data-i18n="reopenAction"></span></button>
       </div>
       <p id="notice" class="notice" hidden data-i18n="safariNotice"></p>
       <p id="status" role="status" aria-live="polite"></p>
@@ -33,6 +33,7 @@
     </div>
     <footer class="footer"><span class="privacy" data-i18n-title="privacy"><svg aria-hidden="true"><use href="icons/ui.svg#shield"/></svg><span data-i18n="localOnly"></span></span><span class="shortcut"><kbd>⌥ ⇧ T</kbd><span data-i18n="reopenAction"></span></span></footer>
   </main>
+  <script src="vendor/tldts.js"></script>
   <script src="core.js"></script>
   <script src="history.js"></script>
 </body>

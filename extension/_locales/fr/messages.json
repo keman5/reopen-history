@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Restaurer les onglets fermés"
+  },
   "description": {
     "message": "Rouvrez les onglets fermés en un clic. Consultez et recherchez les onglets récemment fermés."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "Page $1 sur $2"
+  },
+  "menuHistory": {
+    "message": "Historique des onglets fermés"
   }
 }

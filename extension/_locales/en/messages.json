@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Reopen History"
+  },
   "description": {
     "message": "Reopen closed tabs in one click. Browse and search recently closed tabs."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "Page $1 of $2"
+  },
+  "menuHistory": {
+    "message": "Closed history"
   }
 }

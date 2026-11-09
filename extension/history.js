@@ -2,8 +2,8 @@ const api = globalThis.browser || globalThis.chrome;
 const t = (key, substitutions) => api.i18n.getMessage(key, substitutions);
 document.documentElement.lang = api.i18n.getUILanguage();
 document.documentElement.dir = /^(ar|he|fa|ur)(-|$)/.test(document.documentElement.lang) ? 'rtl' : 'ltr';
-document.title = t('history') + ' · Reopen History';
 for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n);
+document.title = t('history') + ' · ' + t('appName');
 for (const node of document.querySelectorAll('[data-i18n-placeholder]')) {
   node.placeholder = t(node.dataset.i18nPlaceholder);
   node.setAttribute('aria-label', node.placeholder);
@@ -40,6 +40,31 @@ function entryTitle(entry) {
 function address(url) {
   try { return new URL(url).hostname; } catch { return url; }
 }
+const hasFaviconCache = api.runtime.getManifest().permissions.includes('favicon');
+function siteIcon(entry) {
+  const identity = ReopenCore.siteIdentity(entry.url);
+  const icon = document.createElement('span');
+  icon.className = `entry-icon site-color-${identity.color}`;
+  icon.textContent = identity.letter;
+  icon.setAttribute('aria-hidden', 'true');
+  let source = ReopenCore.cachedIcon(entry.favIconUrl);
+  if (!source && hasFaviconCache && ReopenCore.isRestorable(entry)) {
+    const cached = new URL(api.runtime.getURL('_favicon/'));
+    cached.searchParams.set('pageUrl', entry.url);
+    cached.searchParams.set('size', '32');
+    source = cached.href;
+  }
+  if (source) {
+    const image = document.createElement('img');
+    image.alt = '';
+    image.width = image.height = 20;
+    image.addEventListener('load', () => { icon.classList.add('has-favicon'); });
+    image.addEventListener('error', () => { image.remove(); icon.classList.remove('has-favicon'); });
+    image.src = source;
+    icon.append(image);
+  }
+  return icon;
+}
 function render() {
   const query = search.value.trim().toLocaleLowerCase();
   const filtered = recent.filter(item => `${item.title} ${item.url}`.toLocaleLowerCase().includes(query));
@@ -61,10 +86,7 @@ function render() {
     const button = document.createElement('button');
     button.className = 'entry';
     button.disabled = busy;
-    const icon = document.createElement('span');
-    icon.className = 'entry-icon';
-    icon.replaceChildren(makeIcon(entry.tabCount ? 'window' : 'document'));
-    icon.setAttribute('aria-hidden', 'true');
+    const icon = siteIcon(entry);
     const text = document.createElement('span');
     text.className = 'entry-text';
     const title = document.createElement('span');

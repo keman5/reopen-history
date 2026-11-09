@@ -189,7 +189,7 @@ test('Toolbar history is always available while webpage menus remain opt-in', as
   assert.deepEqual([...w.menus.keys()], ['history']);
   await w.api.storage.local.set({ showContextMenu: true });
   await w.message({ type: 'list' });
-  assert.deepEqual([...w.menus.keys()], ['history', 'reopen']);
+  assert.deepEqual([...w.menus.keys()], ['reopen', 'history']);
   assert.deepEqual(Array.from(w.menus.get('history').contexts), ['action', 'page']);
   const restarted = worker({ saved: w.storage });
   await restarted.message({ type: 'list' });
@@ -259,4 +259,25 @@ test('Expired native history preserves data if URL recovery fails and caps at 10
   w.failCreation();
   assert.equal((await w.message({ type: 'restore', id: '0' })).error, 'create failed');
   assert.equal((await w.message({ type: 'list' })).entries.length, 1000);
+});
+
+test('Site identity uses registrable domains, private suffixes and stable colors', () => {
+  assert.equal(core.siteIdentity('https://docs.google.com').letter, 'G');
+  assert.equal(core.siteIdentity('https://news.bbc.co.uk').domain, 'bbc.co.uk');
+  assert.equal(core.siteIdentity('https://news.bbc.co.uk').letter, 'B');
+  assert.equal(core.siteIdentity('https://alice.github.io').letter, 'A');
+  assert.deepEqual(core.siteIdentity('https://a.example.com'), core.siteIdentity('https://b.example.com'));
+  assert.equal(core.siteIdentity('http://localhost').letter, 'L');
+  assert.equal(core.siteIdentity('invalid').letter, '?');
+  assert.notEqual(core.siteIdentity('https://google.com').color, core.siteIdentity('https://bbc.co.uk').color);
+});
+
+test('Icon cache accepts only bounded inline raster images', () => {
+  const icon = 'data:image/png;base64,aGVsbG8=';
+  assert.equal(core.cachedIcon(icon), icon);
+  for (const value of ['https://example.com/favicon.ico', 'javascript:alert(1)', 'data:image/svg+xml;base64,PHN2Zz4=', 'data:image/png;base64,' + 'a'.repeat(2048), null]) {
+    assert.equal(core.cachedIcon(value), '');
+  }
+  const entry = core.sessionsToEntries([{ lastModified: 1, tab: { sessionId: 'icon', url: 'https://example.com', favIconUrl: icon } }])[0];
+  assert.equal(entry.favIconUrl, icon);
 });

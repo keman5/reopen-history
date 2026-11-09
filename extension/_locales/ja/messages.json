@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "閉じたタブを復元"
+  },
   "description": {
     "message": "クリックで閉じたタブを復元。最近閉じたタブを一覧・検索できます。"
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "$1 / $2 ページ"
+  },
+  "menuHistory": {
+    "message": "閉じたタブの履歴"
   }
 }

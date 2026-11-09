@@ -34,3 +34,25 @@ Firefox follow-up: removed the unsupported MV3 `background.persistent` field fro
 - No extension store submissions, Mozilla permanent-install signature, Apple notarization or public release upload. Build ZIPs are local install/developer artifacts.
 - Native toolbar long press is unavailable through portable WebExtensions APIs. The selected behavior is immediate toolbar-click recovery plus options/shortcut history and toolbar context-menu history; long press is supported on the extension-owned page button.
 - All browsers retain up to 1,000 local entries. Native browsers initially import at most 25 available sessions, then accumulate closures while active; missing older sessions cannot be backfilled. Available all-web window sessions restore the whole window; expired archived entries reopen only their saved URL (the first tab for windows). Safari cannot recover original page/session state or tabs closed while tracking was inactive.
+
+
+## Site icons — 2026-11-09
+
+- Added registrable-domain initials and eight deterministic color choices using the locally bundled MIT-licensed `tldts` suffix parser.
+- Chromium uses the browser-local favicon cache with `favicon` permission; small inline raster images from native-session/Safari metadata are preserved in local history. No remote icon fetches or third-party favicon service.
+- Core suite: 19 tests passed, including public/private suffix handling, stable colors, invalid URLs, icon size/type limits and session icon retention.
+- Headless Edge checks passed for both native and Safari fallback builds: real inline raster image display, load-error letter fallback, deterministic color class and exclusion of remote icon URLs. Existing recovery, search and pagination checks also passed.
+- Rebuilt all browser packages and signed/installed the Safari host through `build.sh` into `~/downloads/dist`. Actual Safari icon rendering remains unverified.
+
+## 2026-11-09 compact history chrome and toolbar icon
+
+- Reduced history-page header, footer and outer spacing; removed the reopen button help tooltip while retaining its visible action text and accessible name.
+- Removed the toolbar count badge and clear any badge retained by an older version on background startup. History storage and synchronization remain active.
+- All manifests reference the existing `icons/icon128.png` directly for the toolbar. Builds no longer redraw source PNG icons; the supplied icon SHA-256 remained `66465a656d118643331721bb4d6e9046eaa8392ce716084e72b80ea98d29ef85`.
+- All packages rebuilt under `~/downloads/dist`; Safari host signed, verified and replaced locally. Core suite: 19 passed. Headless Edge checks passed in native and Safari-fallback modes, including header/footer dimensions, absent tooltip, empty badge and manifest icon path. Actual Safari activation/UI remains untested.
+
+## 2026-11-09 localized extension name
+
+- Added `appName` in all 12 locales. Simplified Chinese is `恢复已关闭标签`; Traditional Chinese is `恢復已關閉標籤`; English retains `Reopen History`.
+- Localized the manifest name, history/options brand labels and document titles. Safari host app filename and bundle identifiers remain stable.
+- Rebuilt all browser packages and signed/replaced the Safari host. Core tests: 19 passed. Headless Edge native/fallback checks passed, including localized manifest/brand/title and options branding. Locale key completeness checks passed. Actual Safari UI and every individual language setting were not tested.

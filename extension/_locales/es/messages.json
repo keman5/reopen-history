@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Restaurar pestañas cerradas"
+  },
   "description": {
     "message": "Reabre pestañas cerradas con un clic. Consulta y busca las pestañas cerradas recientemente."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "Página $1 de $2"
+  },
+  "menuHistory": {
+    "message": "Historial de pestañas cerradas"
   }
 }

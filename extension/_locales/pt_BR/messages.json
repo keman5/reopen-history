@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Restaurar abas fechadas"
+  },
   "description": {
     "message": "Reabra abas fechadas com um clique. Consulte e pesquise as abas fechadas recentemente."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "Página $1 de $2"
+  },
+  "menuHistory": {
+    "message": "Histórico de abas fechadas"
   }
 }

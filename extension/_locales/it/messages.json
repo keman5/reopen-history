@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Ripristina schede chiuse"
+  },
   "description": {
     "message": "Riapri le schede chiuse con un clic. Consulta e cerca le schede chiuse di recente."
   },
@@ -88,5 +91,8 @@
   },
   "pageStatus": {
     "message": "Pagina $1 di $2"
+  },
+  "menuHistory": {
+    "message": "Cronologia delle schede chiuse"
   }
 }
