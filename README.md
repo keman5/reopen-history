@@ -8,7 +8,7 @@ A small, local-only browser extension for recovering closed tabs. Built independ
 
 - **Click the pinned toolbar button:** reopen the most recently closed tab or window.
 - **Right-click the toolbar button → Closed tabs:** open `history.html` directly in a normal browser tab. Browsers own the native right-click menu, so selecting this item is required. Extension options can additionally enable webpage menus (off by default).
-- **Inside the history page:** click the blue button to reopen the latest entry; hold it for 500 ms to reveal the list. Escape hides the history list without closing the tab. Standard Tab, Enter and Space navigation is supported, without automatically focusing controls.
+- **Inside the history page:** click the orange button to reopen the latest entry; hold it for 500 ms to reveal the list. Escape hides the history list without closing the tab. Standard Tab, Enter and Space navigation is supported, without automatically focusing controls.
 - **Keyboard:** `Alt+Shift+T` reopens the latest entry; `Ctrl+Shift+Y` opens history (`⌘+Shift+Y` on macOS). Browser or OS shortcuts may take precedence; change bindings in your browser's extension shortcuts settings.
 
 **Toolbar long press:** standard WebExtensions toolbar actions expose click events, not pointer-down/up events. A portable extension cannot distinguish a short click from a long hold on the native toolbar. The toolbar therefore keeps immediate one-click recovery; long press is implemented on the extension's own button. This tradeoff was explicitly selected for this project.

@@ -23,7 +23,7 @@
 
 - Headless Edge verified history opens directly at `history.html` in a normal browser window, without a `POPUP` context or forced focus. Escape collapses the list without closing its tab, and restoring an entry leaves the history page open. These checks passed in native-session and Safari-fallback modes. Physical right-click menu selection remains untested.
 - Version 1.0.1 includes the Apple-style history interface, toolbar context-menu history page, options page and filtering; all three packages and the signed Safari host were rebuilt and the local host replaced.
-- Implemented the selected Apple-style design: original blue tab/return icons, unified searchable list with a newest-entry badge and 100-entry pagination, light/dark styling, privacy footer and responsive full-page layout. Popup opening, automatic dismissal and popup-only styles have been removed. Existing independent design prototypes remain in `design-demos/`.
+- Implemented the selected Apple-style design: orange folder/return icon and a matching orange interface theme, unified searchable list with a newest-entry badge and 100-entry pagination, light/dark styling, privacy footer and responsive full-page layout. Popup opening, automatic dismissal and popup-only styles have been removed. Existing independent design prototypes remain in `design-demos/`.
 
 ## Pending or deliberately limited
 
